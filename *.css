@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background-color: greenyellow;
+  padding: 1vh 2vw;
+  display: grid;
+  grid-template-columns: 70px auto;
+  column-gap: 4vw;
+}
+
+.logo {
+  width: 70px;
+  grid-column: 1 / 2;
+}
+
+.titre {
+  grid-column: 2 / 2;
+  padding: 1.5vh;
+}
+
+.main {
+  margin: 5vh auto;
+  padding: 2vw;
+  width: 70%;
+  display: grid;
+  row-gap: 4vh;
+}
+
+.courriel {
+  display: grid;
+  column-gap: 10vw;
+}
+
+.nouvMessage {
+  grid-column: 1 / 2;
+  display: grid;
+  grid-template-rows: 3.5vh auto 3vh;
+  row-gap: 2vh;
+}
+
+#nouvMessage {
+  min-height: 10vh;
+}
+
+button {
+  width: 5em;
+  font-size: 1.2em;
+  margin-left: auto;
+}
+
+.contacts {
+  grid-column: 2 / 2;
+  display: grid;
+  grid-template-rows: 3.5vh auto;
+  row-gap: 2vh;
+}
+
+#contacts {
+  height: 75%;
+}
