@@ -4,9 +4,9 @@ Courriel est un système de messagerie pair-à-pair, c.-à-d., sans serveur cent
 
 Le projet courriel est séparé en deux parties:
 
-    1. **Projet 1:** Interface web pour le courriel (code en **html**, **css** et **js**, à exécuter par un navigateur).
+1. **Projet 1:** Interface web pour le courriel (code en **html**, **css** et **js**, à exécuter par un navigateur).
 
-    2. **Projet 2:** Un mini-serveur permettant le partage (distribution) des courriels (messages) entre plusieurs utilisateurs.
+2. **Projet 2:** Un mini-serveur permettant le partage (distribution) des courriels (messages) entre plusieurs utilisateurs.
 
 ## Projet 1
 
@@ -14,9 +14,9 @@ Créer une page web (html) pour le courriel.
 
 L'interface WEB devrait pouvoir:
 
-    1. Visualiser et rechercher la liste de messages
-    2. Composer un nouveau message.
-    3. Visualiser, rechercher et modifier le carnet d'adresses
+1. Visualiser et rechercher la liste de messages
+2. Composer un nouveau message.
+3. Visualiser, rechercher et modifier le carnet d'adresses
 
 Un message ne contient que du texte. Par exemple:
 
@@ -43,4 +43,4 @@ Chaque groupe (de 1 à 5 personnes) devrait produire:
 
     1.Qualité et présentation du document html : 40%
     2.Qualité et présentation du document css : 30%
-    3. Qualité, présentation et structure du code java-script : 30%
+    3.Qualité, présentation et structure du code java-script : 30%
