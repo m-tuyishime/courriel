@@ -6,7 +6,8 @@
   font-weight: 200;
 }
 
-input, textarea {
+input,
+textarea {
   border: none;
   background-color: transparent;
   outline: none;
@@ -92,6 +93,7 @@ header {
   font-size: 15px;
   line-height: 2vh;
 }
+
 /* --------------------------------BARRE DE HAUT -------------------------------*/
 
 /* --------------------------------BARRE DE RECHERCHE DES MESSAGES -------------------------------*/
@@ -116,17 +118,16 @@ header {
 .recherche-messages input {
   font-size: 24px;
 }
+
 /* --------------------------------BARRE DE RECHERCHE DES MESSAGES -------------------------------*/
 
 /* --------------------------------MESSAGES -------------------------------*/
 .container-courriels {
   height: 100%;
   width: 100%;
-  background: linear-gradient(
-    180deg,
-    #78b8f3 0%,
-    rgba(120, 100, 247, 0.14) 100%
-  );
+  background: linear-gradient(180deg,
+      #78b8f3 0%,
+      rgba(120, 100, 247, 0.14) 100%);
   border-radius: 25px;
   margin: 0 auto auto auto;
   display: grid;
@@ -167,6 +168,7 @@ header {
   margin: auto;
   font-size: 28px;
 }
+
 /* --------------------------------MESSAGES -------------------------------*/
 
 /* --------------------------------NOUVEAU -------------------------------*/
@@ -225,7 +227,7 @@ header {
 .nouv-btn-envoyer {
   margin: 0 1vw 0 auto;
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 24% 70%;
   width: 122px;
   height: 34px;
   background: #474D52;
@@ -243,12 +245,95 @@ header {
 .nouv-btn-envoyer * {
   margin: auto;
 }
+
+.nouv-btn-envoyer img {
+  margin-right: 0;
+}
+
 /* --------------------------------NOUVEAU -------------------------------*/
 
 /* --------------------------------CONTACTS -------------------------------*/
 .container-contacts {
   width: 100%;
-  height: 60%;
+  height: 100%;
   background: linear-gradient(180deg, #FFFF9D 0%, rgba(246, 246, 185, 0.49) 56.77%, #FFFF84 100%);
-  border-radius: 25px;
+  border-radius: 35px;
+  display: grid;
+  grid-template-rows: 12% 76% 8%;
+  row-gap: 2%;
 }
+
+.recherche-contacts {
+  background-color: white;
+  border-radius: 25px;
+  display: grid;
+  grid-template-columns: 15% 84%;
+  column-gap: 1%;
+}
+
+.recherche-contacts:hover {
+  border: black 2px solid;
+}
+
+.recherche-contacts img {
+  margin: auto;
+  width: 40px;
+  height: 40px;
+}
+
+.recherche-contacts input {
+  font-size: 26px;
+}
+
+.list-contacts {
+  display: grid;
+}
+
+.contacts-contact {
+  width: 90%;
+  height: 76px;
+  background: #474D52;
+  border-radius: 0px 15px 0px 0px;
+  display: grid;
+  grid-template-columns: 20% 55% 10% 15%;
+}
+
+.contacts-contact img {
+  height: 37px;
+  width: 37px;
+  margin: auto;
+}
+
+.contacts-contact p {
+  font-size: 24px;
+  color: white;
+  margin: auto;
+  margin-left: 0;
+}
+
+.btn-ajouter-contact {
+  border-radius: 0px 0px 25px 25px;
+  background-color: white;
+  border: none;
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+
+.btn-ajouter-contact:hover {
+  border: black 2px solid;
+  background-color: rgb(228, 228, 228);
+}
+
+.btn-ajouter-contact img {
+  width: 30px;
+  height: 30px;
+  margin: auto;
+}
+
+.btn-ajouter-contact p {
+  font-size: 24px;
+  margin: auto;
+  margin-left: 0;
+}
+
+/* --------------------------------CONTACTS -------------------------------*/
