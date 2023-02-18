@@ -13,29 +13,31 @@ input, textarea {
 }
 
 body {
+  height: 100vh;
   background-color: #efefef;
   display: grid;
-  grid-template-rows: 10% 90%;
-  row-gap: 3vh;
+  grid-template-rows: 10% 84%;
+  row-gap: 3%;
 }
 
 main {
   display: grid;
-  grid-template-rows: 37% 63%;
-  row-gap: 6vh;
+  grid-template-rows: 37% 57%;
+  row-gap: 6%;
   width: 80%;
-  margin: 0 auto 3vh auto;
+  margin: 0 auto 0 auto;
 }
 
 .premiere-range {
   display: grid;
-  grid-template-rows: 20% 80%;
+  grid-template-rows: 15% 80%;
+  row-gap: 5%;
 }
 
 .deuxieme-range {
   display: grid;
-  grid-template-columns: 50% 40%;
-  column-gap: 10%;
+  grid-template-columns: 55% 30%;
+  column-gap: 15%;
 }
 
 /* --------------------------------BARRE DE HAUT -------------------------------*/
@@ -97,9 +99,8 @@ header {
   background-color: white;
   border: black solid 1px;
   border-radius: 50px;
-  height: 4.7vh;
+  height: 100%;
   width: 100%;
-  margin: auto;
   display: grid;
   grid-template-columns: 5% 95%;
 }
@@ -119,7 +120,7 @@ header {
 
 /* --------------------------------MESSAGES -------------------------------*/
 .container-courriels {
-  height: 28vh;
+  height: 100%;
   width: 100%;
   background: linear-gradient(
     180deg,
@@ -171,9 +172,9 @@ header {
 /* --------------------------------NOUVEAU -------------------------------*/
 .container-nouv {
   display: grid;
-  grid-template-rows: 20% 72% 8%;
+  grid-template-rows: 20% 70% 8%;
   width: 100%;
-  height: 56.1vh;
+  height: 100%;
   background-color: #8f8f8f;
   border-radius: 15px 15px 10px 10px;
 }
@@ -243,3 +244,11 @@ header {
   margin: auto;
 }
 /* --------------------------------NOUVEAU -------------------------------*/
+
+/* --------------------------------CONTACTS -------------------------------*/
+.container-contacts {
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(180deg, #FFFF9D 0%, rgba(246, 246, 185, 0.49) 56.77%, #FFFF84 100%);
+  border-radius: 25px;
+}
