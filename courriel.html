@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Courriel</title>
-    <link rel="stylesheet" href="*.css" />
+    <link rel="stylesheet" href="./sytles/courriel.css" />
+    <link rel="stylesheet" href="./sytles/models.css" />
   </head>
   <body>
     <header>
@@ -30,12 +31,13 @@
           <input type="search" placeholder="Chercher un courriel" />
         </div>
         <ul class="container-courriels">
+          <p class="hidden aucun-message">Vous avez aucun message</p>
           <li class="courriel courriel-nonlu">
-            <img src="" alt="logo de courriel" />
+            <img src="./images/message-nonlu.svg" alt="logo de courriel" />
             <p class="expediteur">Niko Bellic</p>
             <p class="objet">I don't want to go bowling...</p>
             <p class="extrait">Stop asking me to go bowling with you...</p>
-            <img src="" alt="logo de poubelle" />
+            <img src="./images/message-poubelle.svg" alt="logo de poubelle" />
           </li>
         </ul>
       </div>
@@ -43,23 +45,23 @@
         <div class="container-nouv">
           <div class="nouv-info">
             <div class="container-nouv-destinataire">
-              <img src="" alt="logo d'un utilisateur" class="nouv-user-logo" />
-              <input type="text" class="nouv-objet" />
+              <img
+                src="./images/utilisateur.svg"
+                alt="logo d'un utilisateur"
+              />
+              <input type="text" placeholder="Sélectionner un destinataire" />
+              <img src="./images/expandre_bas.svg" alt="dropdown-arrow">
             </div>
-            <br />
             <div class="container-nouv-objet">
-              <p class="titre-nouv-objet"></p>
-              <input type="text" class="nouv-objet" />
+              <p>Sujet</p>
+              <input type="text"/>
             </div>
           </div>
-          <input
-            type="text"
-            class="nouv-message"
-            placeholder="Composer un message"
-          />
+          <textarea class="nouv-message"
+          placeholder="Composez un message"></textarea>
           <div class="nouv-footer">
             <button class="nouv-btn-envoyer">
-              <img src="" alt="logo d'envoi" />
+              <img src="./images/envoyer.svg" alt="logo d'envoi" />
               <p>Envoyer</p>
             </button>
           </div>

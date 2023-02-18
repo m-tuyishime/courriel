@@ -1,0 +1,245 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+}
+
+input, textarea {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+body {
+  background-color: #efefef;
+  display: grid;
+  grid-template-rows: 10% 90%;
+  row-gap: 3vh;
+}
+
+main {
+  display: grid;
+  grid-template-rows: 37% 63%;
+  row-gap: 6vh;
+  width: 80%;
+  margin: 0 auto 3vh auto;
+}
+
+.premiere-range {
+  display: grid;
+  grid-template-rows: 20% 80%;
+}
+
+.deuxieme-range {
+  display: grid;
+  grid-template-columns: 50% 40%;
+  column-gap: 10%;
+}
+
+/* --------------------------------BARRE DE HAUT -------------------------------*/
+header {
+  width: 100%;
+  background: linear-gradient(180deg, #70ff59 0%, rgba(217, 255, 193, 0) 100%);
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+
+.container-logo,
+.container-adresse {
+  display: inline-grid;
+}
+
+.container-logo {
+  grid-template-columns: 40% 60%;
+  column-gap: 1vw;
+  margin-left: 4vh;
+  margin-right: auto;
+}
+
+.container-logo img {
+  width: 81px;
+  margin: auto;
+}
+
+.container-logo h1 {
+  margin: auto;
+  margin-left: 0;
+  font-size: 40px;
+}
+
+.container-adresse {
+  background-color: black;
+  opacity: 0.65;
+  color: white;
+  border-radius: 0 0 0 30px;
+  grid-template-columns: 20% 80%;
+  padding-top: 1vh;
+  padding-bottom: 2vh;
+}
+
+.titre-adresse {
+  margin-left: auto;
+  font-size: 32px;
+}
+
+.adresse {
+  margin: auto;
+  width: 95%;
+  font-size: 15px;
+  line-height: 2vh;
+}
+/* --------------------------------BARRE DE HAUT -------------------------------*/
+
+/* --------------------------------BARRE DE RECHERCHE DES MESSAGES -------------------------------*/
+.recherche-messages {
+  background-color: white;
+  border: black solid 1px;
+  border-radius: 50px;
+  height: 4.7vh;
+  width: 100%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 5% 95%;
+}
+
+.recherche-messages:hover {
+  border-width: 3px;
+}
+
+.recherche-messages img {
+  margin: auto;
+}
+
+.recherche-messages input {
+  font-size: 24px;
+}
+/* --------------------------------BARRE DE RECHERCHE DES MESSAGES -------------------------------*/
+
+/* --------------------------------MESSAGES -------------------------------*/
+.container-courriels {
+  height: 28vh;
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    #78b8f3 0%,
+    rgba(120, 100, 247, 0.14) 100%
+  );
+  border-radius: 25px;
+  margin: 0 auto auto auto;
+  display: grid;
+}
+
+.courriel {
+  background-color: white;
+  width: 95%;
+  border-radius: 20px;
+  margin: 1vh auto auto auto;
+  display: inline-grid;
+  grid-template-columns: 8% 24% 30% 30% 8%;
+  grid-template-rows: 5.5vh;
+}
+
+.courriel img {
+  margin: auto;
+}
+
+.courriel p {
+  margin: auto 0 auto 0;
+}
+
+.courriel .expediteur {
+  font-size: 24px;
+}
+
+.courriel .objet {
+  font-size: 20px;
+}
+
+.courriel .destinataire {
+  font-size: 15px;
+}
+
+.aucun-message {
+  color: white;
+  margin: auto;
+  font-size: 28px;
+}
+/* --------------------------------MESSAGES -------------------------------*/
+
+/* --------------------------------NOUVEAU -------------------------------*/
+.container-nouv {
+  display: grid;
+  grid-template-rows: 20% 72% 8%;
+  width: 100%;
+  height: 56.1vh;
+  background-color: #8f8f8f;
+  border-radius: 15px 15px 10px 10px;
+}
+
+.nouv-info {
+  background-color: #474d52;
+  border-radius: 15px;
+  display: grid;
+  grid-template-rows: 50% 50%;
+}
+
+.container-nouv-destinataire {
+  display: grid;
+  grid-template-columns: 14% 76% 10%;
+  border-bottom: #949494 solid 2px;
+}
+
+.container-nouv-destinataire img {
+  width: 33px;
+  margin: auto;
+}
+
+.nouv-info input {
+  font-size: 24px;
+  color: white;
+}
+
+.container-nouv-objet {
+  display: grid;
+  grid-template-columns: 14% 86%;
+}
+
+.container-nouv-objet p {
+  font-size: 24px;
+  font-weight: 100;
+  color: white;
+  margin: auto;
+}
+
+.nouv-message {
+  color: white;
+  font-size: 22px;
+  width: 95%;
+  height: 95%;
+  margin: auto;
+}
+
+.nouv-btn-envoyer {
+  margin: 0 1vw 0 auto;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  width: 122px;
+  height: 34px;
+  background: #474D52;
+  border-radius: 12px;
+  color: white;
+  font-size: 20px;
+  border: 0;
+}
+
+.nouv-btn-envoyer:hover {
+  background-color: #9c9c9c;
+  border: 3px black solid;
+}
+
+.nouv-btn-envoyer * {
+  margin: auto;
+}
+/* --------------------------------NOUVEAU -------------------------------*/
