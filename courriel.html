@@ -87,27 +87,49 @@
     </main>
   </div>
   <div class="background-fade">
-    <div class="popAjouter">
-      <div class="popAjouterHeader">
+    <div class="popup pop-ajouter hidden">
+      <div class="pop-header pop-ajouter-header">
         <h1>Ajouter un contact</h1>
         <img src="./images/fermer.svg" alt="logo de fermeture">
       </div>
-      <div class="popAjouterNom">
+      <div class="pop-nom pop-ajouter-nom">
         <img src="./images/utilisateur-ajouter.svg" alt="logo d'utilisateur">
         <input type="text" placeholder="Nom">
       </div>
-      <div class="popAjouterCle">
+      <div class="pop-ajouter-cle">
         <img src="./images/cle-noire.svg" alt="logo d'une cle">
         <textarea placeholder="Clé"></textarea>
       </div>
-      <button class="popAjouterBtn">
+      <button class="pop-ajouter-btn">
         <div>
           <p>Enregistrer</p>
         </div>
         <img src="./images/sauvegarde.svg" alt="logo de sauvegarde">
       </button>
     </div>
-    <div class="popCourriel hidden"></div>
+
+    <div class="popup pop-courriel">
+      <div class="pop-header pop-courriel-header">
+        <h1>Bowling</h1>
+        <div class="pop-poubelle">
+          <img src="./images/poubelle_noire.svg" alt="logo d'effacement">
+        </div>
+        <div class="pop-fermer">
+          <img src="./images/fermer.svg" alt="logo de fermeture">
+        </div>
+      </div>
+      <div class="pop-courriel-nom pop-nom">
+        <p>De :</p>
+        <p class="pop-courriel-expediteur" type="text">Roman Bellic</p>
+      </div>
+      <p class="pop-courriel-text">
+        Hey cousin,<br><br>
+        How's it going? I haven't seen you in a while and I was wondering if you're free to go bowling tonight?<br><br>
+        It's been a while since we did something fun together and I think it would be a great way to catch up. <br><br>
+        Let me know if you're available. <br>
+        Best, Roman
+      </p>
+    </div>
   </div>
 </body>
 

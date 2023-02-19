@@ -339,62 +339,37 @@ header {
 
 /* --------------------------------CONTACTS -------------------------------*/
 
-/* --------------------------------popAjouter -------------------------------*/
-.popAjouter {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  left: 25%;
-  top: 25%;
-  background: #FFFFFF;
-  border-radius: 32px;
-  display: grid;
+/* --------------------------------pop-ajouter -------------------------------*/
+.pop-ajouter {
   grid-template-rows: 10% 12% 66% 3.08vh;
   ;
 }
 
-.popAjouterHeader {
-  display: grid;
+.pop-ajouter-header {
   grid-template-columns: 90% 10%;
-  background-color: #A7A7A7;
-  border-radius: 32px 32px 0 0;
 }
 
-.popAjouterHeader * {
+.pop-ajouter-header * {
   margin: auto;
   font-size: 32px;
   color: #1E1E1E;
 }
 
-.popAjouterNom {
-  display: grid;
-  grid-template-columns: 10% 90%;
-  border-bottom: #9A9A9A 1.5px solid;
-}
-
-.popAjouterNom * {
-  font-size: 24px;
-}
-
-.popAjouterNom img {
-  margin: auto;
-}
-
-.popAjouterCle {
+.pop-ajouter-cle {
   display: grid;
   grid-template-columns: 10% 90%;
 }
 
-.popAjouterCle img {
+.pop-ajouter-cle img {
   margin: 0 auto 0 auto;
 }
 
-.popAjouterCle textarea {
+.pop-ajouter-cle textarea {
   margin: 2% 3% 2% 0;
   font-size: 24px;
 }
 
-.popAjouterBtn {
+.pop-ajouter-btn {
   margin-right: 3%;
   margin-left: auto;
   display: grid;
@@ -406,7 +381,7 @@ header {
   background-color: transparent;
 }
 
-.popAjouterBtn div {
+.pop-ajouter-btn div {
   background-color: #545454;
   height: 3.08vh;
   border-radius: 15px 0px 0px 15px;
@@ -414,14 +389,48 @@ header {
   align-items: center;
 }
 
-.popAjouterBtn div p {
+.pop-ajouter-btn div p {
   color: white;
   font-size: 18px;
   margin: 0 auto 0 auto;
 }
 
-.popAjouterBtn img {
+.pop-ajouter-btn img {
   height: 3.08vh;
 }
 
-/* --------------------------------popAjouter -------------------------------*/
+/* --------------------------------pop-ajouter -------------------------------*/
+
+/* --------------------------------pop-courriel -------------------------------*/
+.pop-courriel {
+  grid-template-rows: 10% 8% 78%;
+}
+
+.pop-courriel-header {
+  grid-template-columns: 82% 8% 10%;
+  padding-left: 2%;
+}
+
+.pop-courriel-header h1 {
+  color: #1E1E1E;
+  margin: auto;
+  margin-left: 0.6vw;
+}
+
+.pop-courriel-nom {
+  padding: 0 3% 0 3%;
+  grid-template-columns: 8% 80% !important;
+}
+
+.pop-courriel-nom * {
+  margin-left: 0;
+}
+
+.pop-courriel-text {
+  width: 94%;
+  height: 95%;
+  margin: auto;
+  font-size: 20px;
+}
+
+/* --------------------------------pop-courriel -------------------------------*/
