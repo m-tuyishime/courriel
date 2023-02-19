@@ -4,6 +4,7 @@
   list-style: none;
   font-family: "Inter", sans-serif;
   font-weight: 200;
+  box-sizing: border-box;
 }
 
 input,
@@ -13,7 +14,7 @@ textarea {
   outline: none;
 }
 
-body {
+.accueil {
   height: 100vh;
   background-color: #efefef;
   display: grid;
@@ -337,3 +338,90 @@ header {
 }
 
 /* --------------------------------CONTACTS -------------------------------*/
+
+/* --------------------------------popAjouter -------------------------------*/
+.popAjouter {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  left: 25%;
+  top: 25%;
+  background: #FFFFFF;
+  border-radius: 32px;
+  display: grid;
+  grid-template-rows: 10% 12% 66% 3.08vh;
+  ;
+}
+
+.popAjouterHeader {
+  display: grid;
+  grid-template-columns: 90% 10%;
+  background-color: #A7A7A7;
+  border-radius: 32px 32px 0 0;
+}
+
+.popAjouterHeader * {
+  margin: auto;
+  font-size: 32px;
+  color: #1E1E1E;
+}
+
+.popAjouterNom {
+  display: grid;
+  grid-template-columns: 10% 90%;
+  border-bottom: #9A9A9A 1.5px solid;
+}
+
+.popAjouterNom * {
+  font-size: 24px;
+}
+
+.popAjouterNom img {
+  margin: auto;
+}
+
+.popAjouterCle {
+  display: grid;
+  grid-template-columns: 10% 90%;
+}
+
+.popAjouterCle img {
+  margin: 0 auto 0 auto;
+}
+
+.popAjouterCle textarea {
+  margin: 2% 3% 2% 0;
+  font-size: 24px;
+}
+
+.popAjouterBtn {
+  margin-right: 3%;
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: 70% 15%;
+  column-gap: 2%;
+  width: 20%;
+  height: 3.08vh;
+  border: none;
+  background-color: transparent;
+}
+
+.popAjouterBtn div {
+  background-color: #545454;
+  height: 3.08vh;
+  border-radius: 15px 0px 0px 15px;
+  display: flex;
+  align-items: center;
+}
+
+.popAjouterBtn div p {
+  color: white;
+  font-size: 18px;
+  margin: 0 auto 0 auto;
+}
+
+.popAjouterBtn img {
+  height: 3.08vh;
+}
+
+/* --------------------------------popAjouter -------------------------------*/
