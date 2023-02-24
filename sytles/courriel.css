@@ -38,8 +38,8 @@ main {
 
 .deuxieme-range {
   display: grid;
-  grid-template-columns: 55% 30%;
-  column-gap: 15%;
+  grid-template-columns: 55% 35%;
+  column-gap: 10%;
 }
 
 /* --------------------------------BARRE DE HAUT -------------------------------*/
@@ -255,8 +255,6 @@ header {
 
 /* --------------------------------CONTACTS -------------------------------*/
 .container-contacts {
-  width: 100%;
-  height: 100%;
   background: linear-gradient(180deg, #FFFF9D 0%, rgba(246, 246, 185, 0.49) 56.77%, #FFFF84 100%);
   border-radius: 35px;
   display: grid;
@@ -283,7 +281,7 @@ header {
 }
 
 .recherche-contacts input {
-  font-size: 26px;
+  font-size: 1.8vw;
 }
 
 .list-contacts {
@@ -403,7 +401,7 @@ header {
 
 /* --------------------------------pop-courriel -------------------------------*/
 .pop-courriel {
-  grid-template-rows: 10% 8% 78%;
+  grid-template-rows: 12% 10% 78%;
 }
 
 .pop-courriel-header {
@@ -419,7 +417,7 @@ header {
 
 .pop-courriel-nom {
   padding: 0 3% 0 3%;
-  grid-template-columns: 8% 80% !important;
+  grid-template-columns: 12% 80% !important;
 }
 
 .pop-courriel-nom * {
