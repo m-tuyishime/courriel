@@ -240,7 +240,7 @@ header {
 
 .nouv-btn-envoyer:hover {
   background-color: #9c9c9c;
-  border: 3px black solid;
+  border: 3px black solid !important;
 }
 
 .nouv-btn-envoyer * {
@@ -319,7 +319,6 @@ header {
 }
 
 .btn-ajouter-contact:hover {
-  border: black 2px solid;
   background-color: rgb(228, 228, 228);
 }
 

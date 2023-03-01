@@ -6,9 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Courriel</title>
-  <link rel="stylesheet" href="./sytles/courriel.css" />
-  <link rel="stylesheet" href="./sytles/models.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="./styles/courriel.css" />
+  <link rel="stylesheet" href="./styles/models.css" />
+  <script src="https://code.jquery.com/jquery-3.6.3.slim.js"
+    integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc=" crossorigin="anonymous"></script>
   <script src="./scripts/courriel.js"></script>
 </head>
 
@@ -37,7 +38,7 @@
         </div>
         <ul class="container-courriels">
           <p class="hidden aucun-message">Vous avez aucun message</p>
-          <li class="courriel courriel-nonlu">
+          <li class="clickable courriel courriel-nonlu">
             <img src="./images/message-nonlu.svg" alt="logo de courriel" />
             <p class="expediteur">Niko Bellic</p>
             <p class="objet">I don't want to go bowling...</p>
@@ -61,7 +62,7 @@
           </div>
           <textarea class="nouv-message" placeholder="Composez un message"></textarea>
           <div class="nouv-footer">
-            <button class="nouv-btn-envoyer">
+            <button class="clickable nouv-btn-envoyer">
               <img src="./images/envoyer.svg" alt="logo d'envoi" />
               <p>Envoyer</p>
             </button>
@@ -73,14 +74,14 @@
             <input type="search" placeholder="Chercher un contact" />
           </div>
           <ul class="list-contacts">
-            <li class="contacts-contact">
+            <li class="clickable contacts-contact">
               <img src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
               <p class="contacts-user">Niko Bellic</p>
               <img src="./images/edit.svg" alt="logo de modification" />
               <img src="./images/poubelle_blanche.svg" alt="logo de poubelle" />
             </li>
           </ul>
-          <button class="btn-ajouter-contact">
+          <button class="clickable btn-ajouter-contact">
             <img src="./images/nouv_utilisater.svg" alt="logo d'ajouter un utilisateur" />
             <p>Ajouter un contact</p>
           </button>
