@@ -1,7 +1,7 @@
 const delCourriel = (id) => {};
 const sendCourriel = (message) => {
   const key = "sentMessages";
-  let sentMessages = localStorage.getItem(key) ?? [];
+  let sentMessages = JSON.parse(localStorage.getItem(key)) ?? [];
   sentMessages.push(message);
   sentMessages = JSON.stringify(sentMessages);
   localStorage.setItem(key, sentMessages);
@@ -34,17 +34,8 @@ $(() => {
   });
   //---------------------------popCourriel----------------------------
 
-  //------------------------------Nouveau-------------------------------
-  $(".nouv-btn-envoyer").on("click", () => {
-    const destinataire = $("#nouv-destinataire").val();
-    const objet = $("#nouv-sujet").val();
-    const message = $("#nouv-message").val();
-    sendCourriel({ destinataire, objet, message });
-    $("#nouv-destinataire").val("");
-    $("#nouv-sujet").val("");
-    $("#nouv-message").val("");
-  });
-
+  //------------------------------Nouveau------------------------------
+  //permet de choisir le destinataire
   let isDestinataireExpand = false;
   $(".container-nouv-destinataire").on("click", event => {
     if (isDestinataireExpand) {
@@ -64,6 +55,27 @@ $(() => {
   $(".container-nouv-objet, .nouv-message").on("click", () => {
     isDestinataireExpand = false;
     destinataireContract()
+  })
+
+  //evite d'envoyer un courriel vide
+  $("#nouv-destinataire, #nouv-sujet, #nouv-message").on("keyup", () => {
+    if($("#nouv-destinataire").val()
+    && $("#nouv-sujet").val()
+    && $("#nouv-message").val()) {
+      $(".nouv-btn-envoyer").removeClass("disabled");
+      $(".nouv-btn-envoyer").on("click", () => {
+        const destinataire = $("#nouv-destinataire").val();
+        const objet = $("#nouv-sujet").val();
+        const message = $("#nouv-message").val();
+        sendCourriel({ destinataire, objet, message });
+        $("#nouv-destinataire").val("");
+        $("#nouv-sujet").val("");
+        $("#nouv-message").val("");
+      });
+    } else {
+      $(".nouv-btn-envoyer").addClass("disabled");
+      $(".nouv-btn-envoyer").off();
+    }
   })
 
   //------------------------------Nouveau-------------------------------
