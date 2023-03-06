@@ -7,6 +7,12 @@ const sendCourriel = (message) => {
   localStorage.setItem(key, sentMessages);
 };
 
+const destinataireContract = () => {
+  $(".container-nouv").css("grid-template-rows", "20% 70% 8%");
+  $(".container-destinataires").addClass("hidden");
+  $(".nouv-info").css("grid-template-rows", "50% 50%");
+}
+
 $(() => {
   //---------------------------popCourriel----------------------------
   // ouvrir le popup
@@ -38,5 +44,27 @@ $(() => {
     $("#nouv-sujet").val("");
     $("#nouv-message").val("");
   });
+
+  let isDestinataireExpand = false;
+  $(".container-nouv-destinataire").on("click", event => {
+    if (isDestinataireExpand) {
+      isDestinataireExpand = false;
+      destinataireContract()
+      $(event.currentTarget).on("change", () => {
+        let entree = $("#nouv-destinataire").val();
+        // sort
+      })
+    } else {
+      isDestinataireExpand = true;
+        $(".container-nouv").css("grid-template-rows", "50% 40% 8%");
+        $(".container-destinataires").removeClass("hidden");
+        $(".nouv-info").css("grid-template-rows", "20% 60% 20%");
+    }
+  });
+  $(".container-nouv-objet, .nouv-message").on("click", () => {
+    isDestinataireExpand = false;
+    destinataireContract()
+  })
+
   //------------------------------Nouveau-------------------------------
 });

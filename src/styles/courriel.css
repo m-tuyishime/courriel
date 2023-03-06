@@ -7,6 +7,14 @@
   box-sizing: border-box;
 }
 
+*::-webkit-scrollbar {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: black;
+}
+
 input,
 textarea {
   border: none;
@@ -192,7 +200,6 @@ header {
 .container-nouv-destinataire {
   display: grid;
   grid-template-columns: 14% 76% 10%;
-  border-bottom: #949494 solid 2px;
 }
 
 .container-nouv-destinataire img {
@@ -205,9 +212,38 @@ header {
   color: white;
 }
 
+.destinataire {
+  margin: 0 auto 1vh auto;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  background-color: #86929b;
+  border-radius: 30px;
+  height: 5vh;
+  width: 95%;
+  color: white;
+}
+
+.destinataire-logo {
+  background-color: #9c9c9c;
+  border-radius: 50%;
+  width: 50%;
+  height: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+
+.destinataire-nom {
+  font-size: 24px;
+  margin-left: 0;
+}
+
 .container-nouv-objet {
   display: grid;
   grid-template-columns: 14% 86%;
+  border-top: #949494 solid 2px;
 }
 
 .container-nouv-objet p {

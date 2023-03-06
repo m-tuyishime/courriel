@@ -2,6 +2,10 @@
   display: none !important;
 }
 
+.scroll {
+  overflow-y: scroll;
+}
+
 
 .background-fade {
   position: absolute;
