@@ -1,11 +1,18 @@
-const delCourriel = (id) => {};
-const sendCourriel = (message) => {
-  const key = "sentMessages";
-  let sentMessages = JSON.parse(localStorage.getItem(key)) ?? [];
-  sentMessages.push(message);
-  sentMessages = JSON.stringify(sentMessages);
-  localStorage.setItem(key, sentMessages);
+const supprimerCourriel = (id) => {};
+const sauvegarder = (key, message) => {
+  let messages = chercher(key) ?? [];
+  messages.push(message);
+  messages = JSON.stringify(messages);
+  localStorage.setItem(key, messages);
+  
+  const event = new StorageEvent("storage", {
+    key,
+    newValue: messages
+  });
+  window.dispatchEvent(event);
 };
+
+const chercher = key => JSON.parse(localStorage.getItem(key));
 
 const destinataireContract = () => {
   $(".container-nouv").css("grid-template-rows", "20% 70% 8%");
@@ -13,24 +20,51 @@ const destinataireContract = () => {
   $(".nouv-info").css("grid-template-rows", "50% 50%");
 }
 
+const ajouterContact = contact => {
+  const $composante = $("#contacts-contact").clone();
+  $composante.removeClass("hidden");
+  if (contact.nom) 
+    $composante.find(".contacts-user").text(contact.nom);
+  else {
+    $composante.find(".logo-utilisateur").attr("src", "./images/cle.svg");
+    $composante.find(".contacts-user").text(raccourcirCle(contact.cle));
+  }
+
+  $(".list-contacts").append($composante);
+}
+
+/* raccourcir la longueur de la cle d'indentification pour prendre les 12 premiers lettre
+et les 7 derniers */
+const raccourcirCle = cle => cle.substring(0, 12) + "..." + cle.substring(cle.length - 7);
+
 $(() => {
+  $(window).on("storage", event => {
+    switch (event.originalEvent.key) {
+      case "contacts":
+        const contacts = chercher("contacts");
+        const contact = contacts[contacts.length -1];
+        ajouterContact(contact);
+      break;
+    }
+  });
+
   //---------------------------popCourriel----------------------------
   // ouvrir le popup
   $(".courriel").on("click", () => {
-    $(".background-fade").show();
-    $(".pop-courriel").show();
+    $(".background-fade").removeClass("hidden");
+    $(".pop-courriel").removeClass("hidden");
   });
   // fermer le popup
   $(".pop-fermer").on("click", () => {
-    $(".background-fade").hide();
-    $(".pop-courriel").hide();
+    $(".background-fade").addClass("hidden");
+    $(".popup").addClass("hidden");
   });
   $(".pop-poubelle").on("click", () => {
     // supprimer le courriel
     alert("are you sure?");
-    $(".background-fade").hide();
-    $(".pop-courriel").hide();
-    delCourriel();
+    $(".background-fade").addClass("hidden");
+    $(".pop-courriel").addClass("hidden");
+    supprimerCourriel();
   });
   //---------------------------popCourriel----------------------------
 
@@ -58,25 +92,60 @@ $(() => {
   })
 
   //evite d'envoyer un courriel vide
-  $("#nouv-destinataire, #nouv-sujet, #nouv-message").on("keyup", () => {
+  $("#nouv-destinataire, #nouv-sujet, #nouv-message").on("input", () => {
     if($("#nouv-destinataire").val()
     && $("#nouv-sujet").val()
     && $("#nouv-message").val()) {
       $(".nouv-btn-envoyer").removeClass("disabled");
-      $(".nouv-btn-envoyer").on("click", () => {
-        const destinataire = $("#nouv-destinataire").val();
-        const objet = $("#nouv-sujet").val();
-        const message = $("#nouv-message").val();
-        sendCourriel({ destinataire, objet, message });
-        $("#nouv-destinataire").val("");
-        $("#nouv-sujet").val("");
-        $("#nouv-message").val("");
-      });
     } else {
       $(".nouv-btn-envoyer").addClass("disabled");
-      $(".nouv-btn-envoyer").off();
+    }
+  });
+
+  //envoie le courriel 
+  $(".nouv-btn-envoyer").on("click", () => {
+    if($("#nouv-destinataire").val()
+    && $("#nouv-sujet").val()
+    && $("#nouv-message").val()) {
+      sauvegarder("sentMessages", { 
+        destinataire: $("#nouv-destinataire").val(), 
+        objet: $("#nouv-sujet").val(), 
+        message: $("#nouv-message").val() 
+      });
+      $("#nouv-destinataire").val("").trigger("input");
+      $("#nouv-sujet").val("");
+      $("#nouv-message").val("");
+    }
+  });
+  //------------------------------Nouveau-------------------------------
+
+  //------------------------------Contacts-------------------------------
+  //ouvrir le popup des contacts
+  $(".btn-ajouter-contact").on("click" , () => {
+    $(".background-fade").removeClass("hidden");
+    $(".pop-ajouter").removeClass("hidden");
+  })
+
+  $(".pop-ajouter-cle textarea").on("input", event => {
+    if($(".pop-ajouter-cle textarea").val()) {
+      $(".pop-ajouter-btn div").addClass("clickable");
+      $(".pop-ajouter-btn").on("mouseover", event => $(event.currentTarget).css("cursor", "pointer"));
+    } else {
+      $(".pop-ajouter-btn div").removeClass("clickable");
+      $(".pop-ajouter-btn").on("mouseover", event => $(event.currentTarget).css("cursor", "default"));
     }
   })
 
-  //------------------------------Nouveau-------------------------------
+  //sauvegarder le contact dans le localstorage
+  $(".pop-ajouter-btn").on("click", () => {
+    if($(".pop-ajouter-cle textarea").val()) {
+      sauvegarder("contacts", {
+        nom: $(".pop-ajouter-nom input").val(),
+        cle: $(".pop-ajouter-cle textarea").val()
+      });
+      $(".pop-ajouter-cle textarea").val("").trigger("input");
+      $(".pop-ajouter-nom input").val("");
+    }
+  });
+  //------------------------------Contacts-------------------------------
 });

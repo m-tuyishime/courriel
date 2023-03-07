@@ -13,6 +13,7 @@
 
 *::-webkit-scrollbar-thumb {
   background-color: black;
+  border-radius: 35px;
 }
 
 input,
@@ -296,14 +297,18 @@ header {
   display: grid;
   grid-template-rows: 12% 76% 8%;
   row-gap: 2%;
+  overflow: hidden;
 }
 
 .recherche-contacts {
   background-color: white;
-  border-radius: 25px;
+  border-radius: 35px;
   display: grid;
   grid-template-columns: 15% 84%;
   column-gap: 1%;
+  width: 97%;
+  height: 100%;
+  margin: auto;
 }
 
 .recherche-contacts:hover {
@@ -321,10 +326,13 @@ header {
 }
 
 .list-contacts {
+  height: 40vh;
   display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(20%, 1fr));
+  row-gap: 1vh;
 }
 
-.contacts-contact {
+#contacts-contact {
   width: 90%;
   height: 76px;
   background: #474D52;
@@ -333,13 +341,13 @@ header {
   grid-template-columns: 20% 55% 10% 15%;
 }
 
-.contacts-contact img {
+#contacts-contact img {
   height: 37px;
   width: 37px;
   margin: auto;
 }
 
-.contacts-contact p {
+#contacts-contact p {
   font-size: 24px;
   color: white;
   margin: auto;
@@ -347,7 +355,7 @@ header {
 }
 
 .btn-ajouter-contact {
-  border-radius: 0px 0px 25px 25px;
+  border-radius: 0px 0px 35px 35px;
   background-color: white;
   border: none;
   display: grid;
@@ -424,7 +432,8 @@ header {
 
 .pop-ajouter-btn div p {
   color: white;
-  font-size: 18px;
+  font-size: 13px;
+  font-weight: 600;
   margin: 0 auto 0 auto;
 }
 

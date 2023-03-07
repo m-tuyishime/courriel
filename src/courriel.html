@@ -81,12 +81,12 @@
             <img src="./images/loupe.svg" alt="logo de recherche">
             <input type="search" placeholder="Chercher un contact" />
           </div>
-          <ul class="list-contacts">
-            <li class="clickable contacts-contact">
-              <img src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
+          <ul class="list-contacts scroll">
+            <li class="clickable" id="contacts-contact">
+              <img class="logo-utilisateur" src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
               <p class="contacts-user">Niko Bellic</p>
-              <img src="./images/edit.svg" alt="logo de modification" />
-              <img src="./images/poubelle_blanche.svg" alt="logo de poubelle" />
+              <img class="logo-modification" src="./images/edit.svg" alt="logo de modification" />
+              <img class="logo-poubelle" src="./images/poubelle_blanche.svg" alt="logo de poubelle" />
             </li>
           </ul>
           <button class="clickable btn-ajouter-contact">
@@ -101,7 +101,9 @@
     <div class="popup pop-ajouter hidden">
       <div class="pop-header pop-ajouter-header">
         <h1>Ajouter un contact</h1>
-        <img src="./images/fermer.svg" alt="logo de fermeture">
+        <div class="pop-fermer">
+          <img src="./images/fermer.svg" alt="logo de fermeture">
+        </div>
       </div>
       <div class="pop-nom pop-ajouter-nom">
         <img src="./images/utilisateur-ajouter.svg" alt="logo d'utilisateur">
