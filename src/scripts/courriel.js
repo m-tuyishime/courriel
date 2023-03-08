@@ -77,40 +77,64 @@ const fermerPopup = $popup => {
   $popup.addClass("hidden");
 }
 
-// Crée une carte pour le contact, la met à jour avec les informations passées en argument, et l'insère dans le document HTML
-const ajouterContact = (contact) => {
+const cloneComposante = (composanteID, contact) => {
   // Recherche s'il y a déjà une composante pour ce contact dans le document HTML.
-  const $composanteExistante = $("#" + contact.id);
+  const $composanteExistante = $(`#${composanteID}-${contact.id}`);
   
-  // Clone la composante des contacts cachée dans le HTML si elle n'existe pas encore
+  // Clone la composante originale cachée dans le HTML si elle n'existe pas encore
   let $composante;
-  if ($composanteExistante.length === 0)
-    $composante = $("#contacts-contact").clone();
-  else 
+  if ($composanteExistante.length === 0) {
+    $composante = $(`#${composanteID}`).clone();
+    // Assigne un id a la nouvelle composante et la rend visible
+    $composante.attr("id", `${composanteID}-${contact.id}`);
+    $composante.removeClass("hidden");
+  } else 
     $composante = $composanteExistante;
-  
+  return $composante;
+}
+
+const ajouterContactDestinataires = contact => {
+  const $composante = cloneComposante("destinataire", contact);
+
   // Met a jour la composante avec les informations du contact.
-  $composante.removeClass("hidden");
+  if (!contact.nom) {
+    $composante.find(".destinataire-logo p").text(contact.cle[0].toLowerCase());
+    $composante.find(".destinataire-nom").text(raccourcirTexte(contact.cle, "cle"));
+  } else {
+    $composante.find(".destinataire-logo p").text(contact.nom[0].toUpperCase());
+    $composante.find(".destinataire-nom").text(raccourcirTexte(contact.nom, "nom"));
+  }
+  $composante.find(".contacts-user").css("fontSize", "20px");
+
+  // Insere la composante dans le carnet des contacts si elle n'est pas deja la
+  if ($(`#contacts-contact-${contact.id}`).length === 0) $(".list-contacts").append($composante);
+}
+
+// Crée une carte pour le contact, la met à jour avec les informations passées en argument, et l'insère dans le document HTML
+const ajouterContactCarnet = contact => {
+  const $composante = cloneComposante("contacts-contact", contact);
+
+  // Met a jour la composante avec les informations du contact.
   if (!contact.nom) {
     $composante.find(".logo-utilisateur").attr("src", "./images/cle.svg"); 
-    $composante.find(".contacts-user").text(raccourcirCle(contact.cle));
+    $composante.find(".contacts-user").text(raccourcirTexte(contact.cle, "cle"));
+  } else {
+    $composante.find(".contacts-user").text(raccourcirTexte(contact.nom, "nom"));
   }
-  $composante.attr("id", `${contact.id}`);
-  $composante.find(".contacts-user").text(contact.nom);
-  $composante.find(".contacts-user").css("fontSize", "24px");
+  $composante.find(".contacts-user").css("fontSize", "20px");
 
-  // Insere la composante dans le carnet des contacts
-  if ($composanteExistante.length === 0) $(".list-contacts").append($composante);
+  // Insere la composante dans le carnet des contacts si elle n'est pas deja la
+  if ($(`#contacts-contact-${contact.id}`).length === 0) $(".list-contacts").append($composante);
   
   // Afficher le contact
-  $composante.find(".logo-utilisateur, .contacts-user").one("click", () => {
+  $composante.find(".logo-utilisateur, .contacts-user").on("click", () => {
     const $popContact = $("#pop-contact-show");
     $popContact.find(".pop-nom input").val(contact.nom);
     $popContact.find(".pop-contact-cle textarea").val(contact.cle);
     ouvrirPopup($popContact);
   })
   // Affiche le contact et permet la modification des informations
-  $composante.find(".logo-modification").one("click", () => {
+  $composante.find(".logo-modification").on("click", () => {
     const $popContact = $("#pop-contact-edit");
     $popContact.find(".pop-nom input").val(contact.nom);
     $popContact.find(".pop-contact-cle textarea").val(contact.cle);
@@ -128,17 +152,46 @@ const ajouterContact = (contact) => {
     ouvrirPopup($popContact);
   })
   // Supprime le contact
-  $composante.find(".logo-poubelle").one("click", () => {
+  $composante.find(".logo-poubelle").on("click", () => {
     supprimer("contacts", {
       id: contact.id
     })
+    $composante.off();
     $composante.remove();
   })
 }
 
-/* Racourcie la longueur de la cle d'indentification pour prendre les 9 premiers lettre
-et les 7 derniers */
-const raccourcirCle = cle => cle.substring(0, 9) + "..." + cle.substring(cle.length - 7);
+/* Racourcie la longueur d'un texte pour prendre les 9 premiers et derniers lettres*/
+const raccourcirTexte = (texte, type) => {
+  // Si le type est une "clé" et la longueur du texte est supérieure à 16 caractères
+  if (type === "cle" && texte.length > 16) {
+    const nbLetters = 9;  // Définir le nombre de lettres à prendre en compte
+    // Prendre les 9 premiers et derniers lettres et ajouter des points de suspension au millieu 
+    return texte.substring(0, nbLetters) + "..." + texte.substring(texte.length - nbLetters);
+  } else if (type === "nom" && texte.length > 13) {
+    let noms = texte.split(" "); // Diviser le nom complet en un tableau de noms
+    
+    // Si le nom contient des espaces
+    if (noms.length > 1) { 
+      let prenom = noms[0]; 
+      // Si le prénom est supérieur à 14 caractères, prendre les premiers 14 caractères et ajouter des points de suspension
+      if (prenom.length > 14) prenom = prenom.substring(0, 14) + "...";
+      
+      let initiales = "";
+    
+      for (let i = 1; i < noms.length; i++) { // Parcourez les noms restants
+        let nom = noms[i];
+        if (nom.length > 0) { // Vérifiez si le nom n'est pas vide
+          initiales += nom[0].toUpperCase() + ". "; // Ajouter l'initiale du nom
+        }
+      }
+      return prenom + " " + initiales.toUpperCase(); // Combine le prénom et les initiales et renvoie le résultat
+    } else {
+      return texte.substring(0, 16) + "..."; // Si le nom ne contient pas d'espace prendre les 16 premiers caractères et ajouter des points de suspension
+    }
+  }
+  return texte; // Renvoie le texte si il est déjà assez court
+}
 
 
 // Code à executer quand le document HTML est prêt
@@ -150,7 +203,7 @@ $(() => {
       // Si l'élément modifié est "contacts", ajouter le nouveau contact
       case "contacts":
         const contact = JSON.parse(event.originalEvent.newValue);
-        ajouterContact(contact);
+        ajouterContactCarnet(contact);
       break;
     }
   });
@@ -175,27 +228,15 @@ $(() => {
   //---------------------------popCourriel----------------------------
 
   //------------------------------Nouveau------------------------------
-  //Permet de choisir le destinataire du courriel à envoyer
-  let isDestinataireExpand = false;
-  $(".container-nouv-destinataire").on("click", event => {
-    if (isDestinataireExpand) {
-      isDestinataireExpand = false;
+  // Ouvre le paneau des contacts quand on click sur la selection du destinataire
+  $("#nouv-destinataire").focusin(() => {
+    // Ouvre le paneau
+    $(".container-nouv").css("grid-template-rows", "50% 40% 8%");
+    $(".container-destinataires").removeClass("hidden");
+    $(".nouv-info").css("grid-template-rows", "20% 60% 20%");
+  }).focusout(() => {
       destinataireContract()
-      $(event.currentTarget).one("change", () => {
-        let entree = $("#nouv-destinataire").val();
-        // sort
-      })
-    } else {
-      isDestinataireExpand = true;
-        $(".container-nouv").css("grid-template-rows", "50% 40% 8%");
-        $(".container-destinataires").removeClass("hidden");
-        $(".nouv-info").css("grid-template-rows", "20% 60% 20%");
-    }
-  });
-  $(".container-nouv-objet, .nouv-message").on("click", () => {
-    isDestinataireExpand = false;
-    destinataireContract()
-  })
+    });
 
   // Evite d'envoyer un courriel vide
   $("#nouv-destinataire, #nouv-sujet, #nouv-message").on("input", () => {
@@ -228,14 +269,14 @@ $(() => {
 
   //------------------------------Contacts-------------------------------
   // Cette fonction vérifie si le champ texte de la pop-up de contact est rempli,
-  // puis ajoute ou supprime les classes "clickable" et "cursor:pointer" selon le cas
+  // puis change le curseur selon le cas
   $(".pop-contact-cle textarea").on("input", () => {
     if($(".pop-contact-cle textarea").val()) {
       $(".pop-contact-btn div").addClass("clickable");
       $(".pop-contact-btn").one("mouseover", event => $(event.currentTarget).css("cursor", "pointer"));
     } else {
       $(".pop-contact-btn div").removeClass("clickable");
-      $(".pop-contact-btn").off("mouseover");
+      $(".pop-contact-btn").one("mouseover", event => $(event.currentTarget).css("cursor", "default"));
     }
   })
 
@@ -275,7 +316,7 @@ $(() => {
   // affiche tous les contacts dans le localstorage
   if (chercherStore("contacts")) {
     let contacts = chercherStore("contacts").values;
-    contacts.forEach(contact => ajouterContact(contact));
+    contacts.forEach(contact => ajouterContactCarnet(contact));
   }
  
   // Lorsqu'un utilisateur tape quelque chose dans le champ de recherche de contacts, filtre les contacts
