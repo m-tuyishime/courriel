@@ -1,3 +1,15 @@
+// Détermine si deux chaînes de caractères sont similaires
+const similaire = (valeurs, input) => {
+  let compte = 0;
+  for (let i = 0; i < valeurs.length; i++) {
+    if (input[compte].toLowerCase() !== valeurs[i].toLowerCase()) compte = 0;
+    else compte++;
+    if (compte === input.length)
+      return true;
+  }
+  return false;
+}
+
 // Supprime un objet dans le localstorage 
 const supprimer = (key, value) => {
   // Cherche le store avec la clé passée en paramètre et si celui-ci est null ou undefined, crée un nouveau store
@@ -20,7 +32,7 @@ const sauvegarder = (key, value) => {
   };
   // Si l'objet à sauvegarder ne possède pas d'id, on lui en ajoute un en utilisant la variable insertCount du store
   if (value.id === undefined) {
-    value.id = store.insertCount;
+    value.id = `${key}-${store.insertCount}`;
     store.insertCount++;
   }
   // Recherche l'index de l'objet dans le store grâce à son id
@@ -68,7 +80,7 @@ const fermerPopup = $popup => {
 // Crée une carte pour le contact, la met à jour avec les informations passées en argument, et l'insère dans le document HTML
 const ajouterContact = (contact) => {
   // Recherche s'il y a déjà une composante pour ce contact dans le document HTML.
-  const $composanteExistante = $(".list-contacts").find("#" + contact.id);
+  const $composanteExistante = $("#" + contact.id);
   
   // Clone la composante des contacts cachée dans le HTML si elle n'existe pas encore
   let $composante;
@@ -259,8 +271,32 @@ $(() => {
     });
   })
 
+  
   // affiche tous les contacts dans le localstorage
-  const contacts = chercherStore("contacts").values;
-  contacts.forEach(contact => ajouterContact(contact));
+  if (chercherStore("contacts")) {
+    let contacts = chercherStore("contacts").values;
+    contacts.forEach(contact => ajouterContact(contact));
+  }
+ 
+  // Lorsqu'un utilisateur tape quelque chose dans le champ de recherche de contacts, filtre les contacts
+  $(".recherche-contacts input").on("input", event => {
+    // Récupère tous les contacts depuis le store 'contacts'
+    const contacts = chercherStore("contacts").values;
+    // Récupère la valeur actuelle du champ de recherche
+    const input = $(event.currentTarget).val();
+    // Si l'utilisateur a entré quelque chose dans le champ de recherche
+    if (input) {
+      // Filtre les contacts qui correspondent à la recherche
+      // et les affiche
+      const matchContacts = contacts.filter(contact => similaire(contact.cle, input) || similaire(contact.nom, input));
+      matchContacts.forEach(contact => $("#" + contact.id).show());
+      // Filtre les contacts qui ne correspondent pas à la recherche
+      // et les cache
+      const noMatchContacts = contacts.filter(contact => !(similaire(contact.cle, input) || similaire(contact.nom, input)));
+      noMatchContacts.forEach(contact => $("#" + contact.id).hide());
+    } else 
+    // Si aucun texte n'est entré dans le champ de recherche, affiche tous les contacts
+      $(".contacts-contact").show();
+  })
   //------------------------------Contacts-------------------------------
 });
