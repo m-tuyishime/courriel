@@ -131,6 +131,7 @@ const raccourcirCle = cle => cle.substring(0, 9) + "..." + cle.substring(cle.len
 
 // Code à executer quand le document HTML est prêt
 $(() => {
+  //----------------------------localstorage----------------------------------------
   // Fonction déclenchée lorsqu'un élément du stockage local est modifié
   $(window).on("storage", event => {
     switch (event.originalEvent.key) {
@@ -141,6 +142,7 @@ $(() => {
       break;
     }
   });
+  //----------------------------localstorage----------------------------------------
 
   //---------------------------popCourriel----------------------------
   // Ouvre le popup d'un couurriel
@@ -256,5 +258,9 @@ $(() => {
       }
     });
   })
+
+  // affiche tous les contacts dans le localstorage
+  const contacts = chercherStore("contacts").values;
+  contacts.forEach(contact => ajouterContact(contact));
   //------------------------------Contacts-------------------------------
 });
