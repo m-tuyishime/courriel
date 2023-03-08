@@ -1,4 +1,15 @@
-const supprimerCourriel = (id) => {};
+// Supprime un objet dans le localstorage 
+const supprimer = (key, value) => {
+  // Cherche le store avec la clé passée en paramètre et si celui-ci est null ou undefined, crée un nouveau store
+  let store = chercherStore(key);
+  // Recherche l'index de l'objet dans le store grâce à son id
+  const indexToRemove = store.values.findIndex(obj => obj.id === value.id);
+  // Enleve l'objet de son tableau
+  store.values.splice(indexToRemove, 1);
+  // Sauvegarde le nouveau store sans l'objet dans le localstorage
+  store = JSON.stringify(store);
+  localStorage.setItem(key, store);
+};
 
 // Sauvegarde un objet dans le localstorage 
 const sauvegarder = (key, value) => {
@@ -106,6 +117,10 @@ const ajouterContact = (contact) => {
   })
   // Supprime le contact
   $composante.find(".logo-poubelle").one("click", () => {
+    supprimer("contacts", {
+      id: contact.id
+    })
+    $composante.remove();
   })
 }
 
@@ -230,7 +245,7 @@ $(() => {
   $(".btn-ajouter-contact").on("click" , () => {
     ouvrirPopup($("#pop-contact"));
     //sauvegarder le contact dans le localstorage lorsque le bouton est cliqué
-    $("#pop-contact .pop-contact-btn").one("click", () => {
+    $("#pop-contact .pop-contact-btn").on("click", () => {
       if($(".pop-contact-cle textarea").val()) {
         sauvegarder("contacts", {
           nom: $(".pop-contact-nom input").val(),
