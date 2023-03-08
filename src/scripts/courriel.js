@@ -1,66 +1,143 @@
 const supprimerCourriel = (id) => {};
-const sauvegarder = (key, message) => {
-  let messages = chercher(key) ?? [];
-  messages.push(message);
-  messages = JSON.stringify(messages);
-  localStorage.setItem(key, messages);
-  
+
+// Sauvegarde un objet dans le localstorage 
+const sauvegarder = (key, value) => {
+  // Cherche le store avec la clé passée en paramètre et si celui-ci est null ou undefined, crée un nouveau store 
+  let store = chercherStore(key) ?? {
+    values: [],
+    insertCount: 0
+  };
+  // Si l'objet à sauvegarder ne possède pas d'id, on lui en ajoute un en utilisant la variable insertCount du store
+  if (value.id === undefined) {
+    value.id = store.insertCount;
+    store.insertCount++;
+  }
+  // Recherche l'index de l'objet dans le store grâce à son id
+  const index = store.values.findIndex(obj => obj.id === value.id);
+  // Si l'objet est déjà présent dans le store, on le met à jour
+  if (index != -1)
+    store.values[index] = value;
+  else {
+    store.values.push(value);
+  }
+  // On transforme le store en chaîne de caractères JSON pour pouvoir le stocker dans le localstorage
+  store = JSON.stringify(store);
+  localStorage.setItem(key, store);
+
+  // On crée un événement de stockage avec la clé et la valeur sauvegardées
   const event = new StorageEvent("storage", {
     key,
-    newValue: messages
+    newValue: JSON.stringify(value),
   });
   window.dispatchEvent(event);
 };
 
-const chercher = key => JSON.parse(localStorage.getItem(key));
+// Cherche un store dans le localstorage avec la clé passée en paramètre et le renvoie sous forme d'objet
+const chercherStore = key => JSON.parse(localStorage.getItem(key));
 
+// Contracte le panel des destinataires
 const destinataireContract = () => {
   $(".container-nouv").css("grid-template-rows", "20% 70% 8%");
   $(".container-destinataires").addClass("hidden");
   $(".nouv-info").css("grid-template-rows", "50% 50%");
 }
 
-const ajouterContact = contact => {
-  const $composante = $("#contacts-contact").clone();
-  $composante.removeClass("hidden");
-  if (contact.nom) 
-    $composante.find(".contacts-user").text(contact.nom);
-  else {
-    $composante.find(".logo-utilisateur").attr("src", "./images/cle.svg");
-    $composante.find(".contacts-user").text(raccourcirCle(contact.cle));
-  }
-
-  $(".list-contacts").append($composante);
+// Ouvre une popup en affichant le fond transparent 
+const ouvrirPopup = $popup => {
+  $(".background-fade").removeClass("hidden");
+  $popup.removeClass("hidden");
 }
 
-/* raccourcir la longueur de la cle d'indentification pour prendre les 12 premiers lettre
-et les 7 derniers */
-const raccourcirCle = cle => cle.substring(0, 12) + "..." + cle.substring(cle.length - 7);
+// Ferme une popup
+const fermerPopup = $popup => {
+  $(".background-fade").addClass("hidden");
+  $popup.addClass("hidden");
+}
 
+// Crée une carte pour le contact, la met à jour avec les informations passées en argument, et l'insère dans le document HTML
+const ajouterContact = (contact) => {
+  // Recherche s'il y a déjà une composante pour ce contact dans le document HTML.
+  const $composanteExistante = $(".list-contacts").find("#" + contact.id);
+  
+  // Clone la composante des contacts cachée dans le HTML si elle n'existe pas encore
+  let $composante;
+  if ($composanteExistante.length === 0)
+    $composante = $("#contacts-contact").clone();
+  else 
+    $composante = $composanteExistante;
+  
+  // Met a jour la composante avec les informations du contact.
+  $composante.removeClass("hidden");
+  if (!contact.nom) {
+    $composante.find(".logo-utilisateur").attr("src", "./images/cle.svg"); 
+    $composante.find(".contacts-user").text(raccourcirCle(contact.cle));
+  }
+  $composante.attr("id", `${contact.id}`);
+  $composante.find(".contacts-user").text(contact.nom);
+  $composante.find(".contacts-user").css("fontSize", "24px");
+
+  // Insere la composante dans le carnet des contacts
+  if ($composanteExistante.length === 0) $(".list-contacts").append($composante);
+  
+  // Afficher le contact
+  $composante.find(".logo-utilisateur, .contacts-user").one("click", () => {
+    const $popContact = $("#pop-contact-show");
+    $popContact.find(".pop-nom input").val(contact.nom);
+    $popContact.find(".pop-contact-cle textarea").val(contact.cle);
+    ouvrirPopup($popContact);
+  })
+  // Affiche le contact et permet la modification des informations
+  $composante.find(".logo-modification").one("click", () => {
+    const $popContact = $("#pop-contact-edit");
+    $popContact.find(".pop-nom input").val(contact.nom);
+    $popContact.find(".pop-contact-cle textarea").val(contact.cle);
+    $popContact.find(".pop-contact-btn").one("click", () => {
+      if($popContact.find(".pop-contact-cle textarea").val()) {
+        sauvegarder("contacts", {
+          nom: $popContact.find(".pop-nom input").val(),
+          cle: $popContact.find(".pop-contact-cle textarea").val(),
+          id: contact.id
+        });
+        fermerPopup($popContact);
+      }
+    });
+    
+    ouvrirPopup($popContact);
+  })
+  // Supprime le contact
+  $composante.find(".logo-poubelle").one("click", () => {
+  })
+}
+
+/* Racourcie la longueur de la cle d'indentification pour prendre les 9 premiers lettre
+et les 7 derniers */
+const raccourcirCle = cle => cle.substring(0, 9) + "..." + cle.substring(cle.length - 7);
+
+
+// Code à executer quand le document HTML est prêt
 $(() => {
+  // Fonction déclenchée lorsqu'un élément du stockage local est modifié
   $(window).on("storage", event => {
     switch (event.originalEvent.key) {
+      // Si l'élément modifié est "contacts", ajouter le nouveau contact
       case "contacts":
-        const contacts = chercher("contacts");
-        const contact = contacts[contacts.length -1];
+        const contact = JSON.parse(event.originalEvent.newValue);
         ajouterContact(contact);
       break;
     }
   });
 
   //---------------------------popCourriel----------------------------
-  // ouvrir le popup
+  // Ouvre le popup d'un couurriel
   $(".courriel").on("click", () => {
-    $(".background-fade").removeClass("hidden");
-    $(".pop-courriel").removeClass("hidden");
+    ouvrirPopup($(".pop-courriel"));
   });
-  // fermer le popup
+  // Permet de fermer tous les popups au click de la croix
   $(".pop-fermer").on("click", () => {
-    $(".background-fade").addClass("hidden");
-    $(".popup").addClass("hidden");
+    fermerPopup($(".popup"));
   });
+  // Supprimer le courriel
   $(".pop-poubelle").on("click", () => {
-    // supprimer le courriel
     alert("are you sure?");
     $(".background-fade").addClass("hidden");
     $(".pop-courriel").addClass("hidden");
@@ -69,13 +146,13 @@ $(() => {
   //---------------------------popCourriel----------------------------
 
   //------------------------------Nouveau------------------------------
-  //permet de choisir le destinataire
+  //Permet de choisir le destinataire du courriel à envoyer
   let isDestinataireExpand = false;
   $(".container-nouv-destinataire").on("click", event => {
     if (isDestinataireExpand) {
       isDestinataireExpand = false;
       destinataireContract()
-      $(event.currentTarget).on("change", () => {
+      $(event.currentTarget).one("change", () => {
         let entree = $("#nouv-destinataire").val();
         // sort
       })
@@ -91,7 +168,7 @@ $(() => {
     destinataireContract()
   })
 
-  //evite d'envoyer un courriel vide
+  // Evite d'envoyer un courriel vide
   $("#nouv-destinataire, #nouv-sujet, #nouv-message").on("input", () => {
     if($("#nouv-destinataire").val()
     && $("#nouv-sujet").val()
@@ -102,7 +179,7 @@ $(() => {
     }
   });
 
-  //envoie le courriel 
+  // Envoie le courriel 
   $(".nouv-btn-envoyer").on("click", () => {
     if($("#nouv-destinataire").val()
     && $("#nouv-sujet").val()
@@ -112,6 +189,7 @@ $(() => {
         objet: $("#nouv-sujet").val(), 
         message: $("#nouv-message").val() 
       });
+      // Réinitialise les champs
       $("#nouv-destinataire").val("").trigger("input");
       $("#nouv-sujet").val("");
       $("#nouv-message").val("");
@@ -120,32 +198,48 @@ $(() => {
   //------------------------------Nouveau-------------------------------
 
   //------------------------------Contacts-------------------------------
-  //ouvrir le popup des contacts
-  $(".btn-ajouter-contact").on("click" , () => {
-    $(".background-fade").removeClass("hidden");
-    $(".pop-ajouter").removeClass("hidden");
-  })
-
-  $(".pop-ajouter-cle textarea").on("input", event => {
-    if($(".pop-ajouter-cle textarea").val()) {
-      $(".pop-ajouter-btn div").addClass("clickable");
-      $(".pop-ajouter-btn").on("mouseover", event => $(event.currentTarget).css("cursor", "pointer"));
+  // Cette fonction vérifie si le champ texte de la pop-up de contact est rempli,
+  // puis ajoute ou supprime les classes "clickable" et "cursor:pointer" selon le cas
+  $(".pop-contact-cle textarea").on("input", () => {
+    if($(".pop-contact-cle textarea").val()) {
+      $(".pop-contact-btn div").addClass("clickable");
+      $(".pop-contact-btn").one("mouseover", event => $(event.currentTarget).css("cursor", "pointer"));
     } else {
-      $(".pop-ajouter-btn div").removeClass("clickable");
-      $(".pop-ajouter-btn").on("mouseover", event => $(event.currentTarget).css("cursor", "default"));
+      $(".pop-contact-btn div").removeClass("clickable");
+      $(".pop-contact-btn").off("mouseover");
     }
   })
 
-  //sauvegarder le contact dans le localstorage
-  $(".pop-ajouter-btn").on("click", () => {
-    if($(".pop-ajouter-cle textarea").val()) {
-      sauvegarder("contacts", {
-        nom: $(".pop-ajouter-nom input").val(),
-        cle: $(".pop-ajouter-cle textarea").val()
-      });
-      $(".pop-ajouter-cle textarea").val("").trigger("input");
-      $(".pop-ajouter-nom input").val("");
-    }
-  });
+  // clone le popup de contact pour afficher les informations d'un contact existant
+  // et le rend non modifiable
+  const $popContactShow = $("#pop-contact").clone(true);
+  $popContactShow.find(".pop-contact-btn").addClass("hidden");
+  $popContactShow.find(".pop-header h1").text("Contact");
+  $popContactShow.find(".pop-nom input").prop("readonly", true);
+  $popContactShow.find(".pop-contact-cle textarea").prop("readonly", true);
+  $popContactShow.attr("id", "pop-contact-show");
+  $(".background-fade").append($popContactShow);
+
+  // clone le popup de contact pour modifier un contact existant et change le titre
+  const $popContactEdit = $("#pop-contact").clone(true);
+  $popContactEdit.find(".pop-header h1").text("Modifier le contact");
+  $popContactEdit.attr("id", "pop-contact-edit");
+  $(".background-fade").append($popContactEdit);
+
+  //ouvrir le popup pour ajouter un contact
+  $(".btn-ajouter-contact").on("click" , () => {
+    ouvrirPopup($("#pop-contact"));
+    //sauvegarder le contact dans le localstorage lorsque le bouton est cliqué
+    $("#pop-contact .pop-contact-btn").one("click", () => {
+      if($(".pop-contact-cle textarea").val()) {
+        sauvegarder("contacts", {
+          nom: $(".pop-contact-nom input").val(),
+          cle: $(".pop-contact-cle textarea").val()
+        });
+        $(".pop-contact-cle textarea").val("").trigger("input");
+        $(".pop-contact-nom input").val("");
+      }
+    });
+  })
   //------------------------------Contacts-------------------------------
 });

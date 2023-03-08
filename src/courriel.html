@@ -82,7 +82,7 @@
             <input type="search" placeholder="Chercher un contact" />
           </div>
           <ul class="list-contacts scroll">
-            <li class="clickable" id="contacts-contact">
+            <li class="clickable contacts-contact" id="contacts-contact">
               <img class="logo-utilisateur" src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
               <p class="contacts-user">Niko Bellic</p>
               <img class="logo-modification" src="./images/edit.svg" alt="logo de modification" />
@@ -98,22 +98,22 @@
     </main>
   </div>
   <div class="background-fade hidden">
-    <div class="popup pop-ajouter hidden">
-      <div class="pop-header pop-ajouter-header">
+    <div class="popup hidden pop-contact" id="pop-contact">
+      <div class="pop-header pop-contact-header">
         <h1>Ajouter un contact</h1>
         <div class="pop-fermer">
           <img src="./images/fermer.svg" alt="logo de fermeture">
         </div>
       </div>
-      <div class="pop-nom pop-ajouter-nom">
+      <div class="pop-nom pop-contact-nom">
         <img src="./images/utilisateur-ajouter.svg" alt="logo d'utilisateur">
         <input type="text" placeholder="Nom">
       </div>
-      <div class="pop-ajouter-cle">
+      <div class="pop-contact-cle">
         <img src="./images/cle-noire.svg" alt="logo d'une cle">
         <textarea placeholder="Clé"></textarea>
       </div>
-      <button class="pop-ajouter-btn">
+      <button class="pop-contact-btn">
         <div>
           <p>Enregistrer</p>
         </div>
