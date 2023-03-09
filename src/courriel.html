@@ -38,7 +38,7 @@
         </div>
         <ul class="container-courriels">
           <p class="hidden aucun-message">Vous avez aucun message</p>
-          <li class="clickable courriel courriel-nonlu">
+          <li class="clickable courriel courriel-nonlu" id="courriel">
             <img src="./images/message-nonlu.svg" alt="logo de courriel" />
             <p class="expediteur">Niko Bellic</p>
             <p class="objet">I don't want to go bowling...</p>
@@ -52,15 +52,15 @@
           <div class="nouv-info">
             <div class="container-nouv-destinataire">
               <img src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
-              <input id="nouv-destinataire" type="text" placeholder="Sélectionner un destinataire" />
+              <input id="nouv-destinataire" name="" type="text" placeholder="Sélectionner un destinataire" />
               <img id="nouv-destinataire-drop" class="rotate-back" src="./images/expandre_bas.svg" alt="dropdown-arrow">
             </div>
             <div class="container-destinataires hidden scroll">
-              <div id="destinataire" class="destinataire">
+              <div id="destinataire" class="destinataire hidden">
                 <div class="destinataire-logo">
-                  <p>N</p>
+                  <p></p>
                 </div>
-                <p class="destinataire-nom">Niko Bellic</p>
+                <p class="destinataire-nom"></p>
               </div>
             </div>
             <div class="container-nouv-objet">
@@ -84,7 +84,7 @@
           <ul class="list-contacts scroll">
             <li class="clickable contacts-contact hidden" id="contacts-contact">
               <img class="logo-utilisateur" src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
-              <p class="contacts-user">Niko Bellic</p>
+              <p class="contacts-user"></p>
               <img class="logo-modification" src="./images/edit.svg" alt="logo de modification" />
               <img class="logo-poubelle" src="./images/poubelle_blanche.svg" alt="logo de poubelle" />
             </li>

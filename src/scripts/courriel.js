@@ -1,3 +1,19 @@
+const filter = (valeurs, composanteID, input) => {
+  // Si l'utilisateur a entré quelque chose dans le champ de recherche
+  if (input) {
+    // Filtre les valeurs qui correspondent à la recherche
+    // et les affiche
+    const matchContacts = valeurs.filter(contact => similaire(contact.cle, input) || similaire(contact.nom, input));
+    matchContacts.forEach(contact => $(`#${composanteID}-${contact.id}`).show());
+    // Filtre les valeurs qui ne correspondent pas à la recherche
+    // et les cache
+    const noMatchContacts = valeurs.filter(contact => !(similaire(contact.cle, input) || similaire(contact.nom, input)));
+    noMatchContacts.forEach(contact => $(`#${composanteID}-${contact.id}`).hide());
+  } else 
+    // Si aucun texte n'est entré dans le champ de recherche, affiche tous les valeurs
+    $("." + composanteID).show();
+}
+
 // Détermine si deux chaînes de caractères sont similaires
 const similaire = (valeurs, input) => {
   let compte = 0;
@@ -15,9 +31,9 @@ const supprimer = (key, value) => {
   // Cherche le store avec la clé passée en paramètre et si celui-ci est null ou undefined, crée un nouveau store
   let store = chercherStore(key);
   // Recherche l'index de l'objet dans le store grâce à son id
-  const indexToRemove = store.values.findIndex(obj => obj.id === value.id);
+  const indexToRemove = store.valeurs.findIndex(obj => obj.id === value.id);
   // Enleve l'objet de son tableau
-  store.values.splice(indexToRemove, 1);
+  store.valeurs.splice(indexToRemove, 1);
   // Sauvegarde le nouveau store sans l'objet dans le localstorage
   store = JSON.stringify(store);
   localStorage.setItem(key, store);
@@ -27,21 +43,21 @@ const supprimer = (key, value) => {
 const sauvegarder = (key, value) => {
   // Cherche le store avec la clé passée en paramètre et si celui-ci est null ou undefined, crée un nouveau store 
   let store = chercherStore(key) ?? {
-    values: [],
-    insertCount: 0
+    valeurs: [],
+    inserations: 0
   };
-  // Si l'objet à sauvegarder ne possède pas d'id, on lui en ajoute un en utilisant la variable insertCount du store
+  // Si l'objet à sauvegarder ne possède pas d'id, on lui en ajoute un en utilisant la variable inserations du store
   if (value.id === undefined) {
-    value.id = `${key}-${store.insertCount}`;
-    store.insertCount++;
+    value.id = `${key}-${store.inserations}`;
+    store.inserations++;
   }
   // Recherche l'index de l'objet dans le store grâce à son id
-  const index = store.values.findIndex(obj => obj.id === value.id);
+  const index = store.valeurs.findIndex(obj => obj.id === value.id);
   // Si l'objet est déjà présent dans le store, on le met à jour
   if (index != -1)
-    store.values[index] = value;
+    store.valeurs[index] = value;
   else {
-    store.values.push(value);
+    store.valeurs.push(value);
   }
   // On transforme le store en chaîne de caractères JSON pour pouvoir le stocker dans le localstorage
   store = JSON.stringify(store);
@@ -108,6 +124,7 @@ const ajouterContactDestinataires = contact => {
   $composante.one("click", () => {
     const $nom = $composante.find(".destinataire-nom").text();
     $("#nouv-destinataire").val($nom);
+    $("#nouv-destinataire").attr("name", contact.id);
   })
 
 }
@@ -198,6 +215,23 @@ const raccourcirTexte = (texte, type) => {
   return texte; // Renvoie le texte si il est déjà assez court
 }
 
+const ajouterCourrielRecu = courriel => {
+  // Clone l'element "#courriel"
+  const $composante = cloneComposante("courriel", courriel);
+
+  // Met a jour la composante avec les informations du courriel.
+  if (!courriel.nom) {
+    // Si le courriel n'a pas de nom, mettre un logo d'une clé et afficher la clé.
+    $composante.find(".logo-utilisateur").attr("src", "./images/cle.svg"); 
+    $composante.find(".contacts-user").text(raccourcirTexte(courriel.cle, "cle"));
+    // Sinon, afficher le nom.
+  } else {
+    $composante.find(".contacts-user").text(raccourcirTexte(courriel.nom, "nom"));
+  }
+
+  // Insere la composante dans le carnet des contacts si elle n'est pas deja la  
+  if ($(`#courriel-${courriel.id}`).length === 0) $(".list-contacts").append($composante);
+}
 
 // Code à executer quand le document HTML est prêt
 $(() => {
@@ -215,6 +249,14 @@ $(() => {
   //----------------------------localstorage----------------------------------------
 
   //---------------------------popCourriel----------------------------
+  // affiche tous les contacts dans le localstorage
+  const storeName = "messagesEnvoyes";
+  if (chercherStore(storeName)) {
+    $(".aucun-message").removeClass("hidden");
+    const courriels = chercherStore(storeName).valeurs;
+    courriels.forEach(courriel => ajouterCourrielRecu(courriel));
+  }
+
   // Ouvre le popup d'un couurriel
   $(".courriel").on("click", () => {
     ouvrirPopup($(".pop-courriel"));
@@ -247,7 +289,7 @@ $(() => {
     } else {
        // Remplir le paneau des noms ou cles des contacts si il y'en a
       if (chercherStore("contacts")) {
-        const contacts = chercherStore("contacts").values;
+        const contacts = chercherStore("contacts").valeurs;
         contacts.forEach(contact => ajouterContactDestinataires(contact));
 
         // Ouvre le paneau
@@ -257,33 +299,105 @@ $(() => {
 
         // Tourne la fleche de bas vers la droite
         $("#nouv-destinataire-drop").addClass("rotate-90").removeClass("rotate-back");
+
+         // Lorsqu'un utilisateur tape quelque chose dans le champ de recherche de contacts, filtre les contacts
+        $(event.currentTarget).on("input", event => {
+          // Récupère tous les contacts depuis le store 'contacts'
+          const contacts = chercherStore("contacts").valeurs;
+          
+          // Récupère la valeur actuelle du champ de recherche
+          const input = $(event.currentTarget).val();
+          
+          // Cache les contacts dont qui ne sont pas similaire au input
+          filter(contacts, "destinataire", input)
+        })
+
         ouvert = true;
       }
     }
   })
-
+  // Ferme le paneau quand on click dans d'autres champs
   $("#nouv-sujet, #nouv-message, #nouv-destinataire-drop").on("click", () => $("#nouv-destinataire").trigger("click"));
 
-  // Evite d'envoyer un courriel vide
+  // Change l'apparence du boutton d'envoi pour indiquer si il est clickable ou pas
   $("#nouv-destinataire, #nouv-sujet, #nouv-message").on("input", () => {
-    if($("#nouv-destinataire").val()
-    && $("#nouv-sujet").val()
-    && $("#nouv-message").val()) {
+    const $destinataire = $("#nouv-destinataire")
+    const destinataire = $destinataire.val();
+    const sujet = $("#nouv-sujet").val();
+    const message = $("#nouv-message").val()
+    // Verifie que les champs necessaires sont remplis
+    if(destinataire && sujet && message) 
+      // Rend le boutton d'envoi plus foncé
       $(".nouv-btn-envoyer").removeClass("disabled");
-    } else {
+    else
+      // Rend le boutton d'envoi plus pale
       $(".nouv-btn-envoyer").addClass("disabled");
-    }
   });
 
-  // Envoie le courriel 
+  // Rend le boutton d'envoi clickable si les conditions sont remplies
   $(".nouv-btn-envoyer").on("click", () => {
-    if($("#nouv-destinataire").val()
-    && $("#nouv-sujet").val()
-    && $("#nouv-message").val()) {
-      sauvegarder("sentMessages", { 
-        destinataire: $("#nouv-destinataire").val(), 
-        objet: $("#nouv-sujet").val(), 
-        message: $("#nouv-message").val() 
+    const $destinataire = $("#nouv-destinataire")
+    const destinataire = $destinataire.val();
+    const sujet = $("#nouv-sujet").val();
+    const message = $("#nouv-message").val()
+    // Verifie que les champs necessaires sont remplis
+    if(destinataire && sujet && message) {
+      if (sujet.length > 50)
+        return alert("La ligne d'objet ne doit pas dépasser 50 caractères.");
+      if (message.length > 200)
+        return alert("Le message ne doit pas dépasser 200 caractères.");
+
+      // La variable de la clé de l'addresse du déstinataire
+      let cle;
+      // Si destinataire est une cle
+      if (destinataire.length === 210)
+        cle = destinataire;
+      // Si il n'y a pas de contact dans le localstorage
+      else if (!chercherStore("contacts")) 
+        return alert(`Vous avez aucun contact nommée "${destinataire}"`);
+      else {
+        // Cherche les contacts
+        const contacts = chercherStore("contacts").valeurs;
+        // Cherche la valeur de l'attribut "name" du input #nouv-destinataire qui devrait être le
+        // id du contact si l'utilisateur a sélectionné un des options de destinataire
+        const id = $destinataire.attr("name");
+        // Si le id est trouvé
+        if (id) {
+          // Cheche le contact qui a le même id
+          const contact = contacts.find(contact => contact.id = id);
+          // Si le contact est trouvé
+          if (contact)
+            cle = contact.cle;
+          else
+            return alert(`Vous avez aucun contact nommée "${destinataire}"`);
+        // Si l'utilisateur n'a pas sélectionné un des options de destinataire
+        } else {
+          // Cherche la carte du contact qui affiche le même nom que destinataire parmis les
+          // cartes du carnet de contacts
+          const $contact = $("p.contacts-user:contains('" + destinataire + "')").parent();
+          console.log(destinataire);
+          console.log($contact.attr("id"));
+          // Si la carte est trouvé
+          if ($contact.length) {
+            // Cherche la valeur de l'attribut "id" de $contact
+            const componentId = $contact.attr("id");
+            // Utilise un regex et substring pour trouvé un id de même format que dans le localstorage
+            const contactRegX = /\bcontact-\d+\b/;
+            const contactId = componentId.substring(componentId.search(contactRegX));
+            // Cherche le contact qui a le même id que contactId dans le localstorage
+            const contact = contacts.find(contact => contact.id = contactId);
+            cle = contact.cle;
+          } else
+            return alert(`Vous avez aucun contact nommée "${destinataire}"`);
+        }
+      }
+      // sauvegarde le courriel a envoyer dans le localstorage
+      sauvegarder("messagesEnvoyes", { 
+        expediteur: $(".addresse").text(),
+        destinataire: cle, 
+        sujet, 
+        message,
+        lu: false
       });
       // Réinitialise les champs
       $("#nouv-destinataire").val("").trigger("input");
@@ -291,6 +405,7 @@ $(() => {
       $("#nouv-message").val("");
     }
   });
+  
   //------------------------------Nouveau-------------------------------
 
   //------------------------------Contacts-------------------------------
@@ -341,29 +456,22 @@ $(() => {
   
   // affiche tous les contacts dans le localstorage
   if (chercherStore("contacts")) {
-    const contacts = chercherStore("contacts").values;
+    const contacts = chercherStore("contacts").valeurs;
     contacts.forEach(contact => ajouterContactCarnet(contact));
   }
  
   // Lorsqu'un utilisateur tape quelque chose dans le champ de recherche de contacts, filtre les contacts
   $(".recherche-contacts input").on("input", event => {
     // Récupère tous les contacts depuis le store 'contacts'
-    const contacts = chercherStore("contacts").values;
+    const contacts = chercherStore("contacts").valeurs;
+    
     // Récupère la valeur actuelle du champ de recherche
     const input = $(event.currentTarget).val();
-    // Si l'utilisateur a entré quelque chose dans le champ de recherche
-    if (input) {
-      // Filtre les contacts qui correspondent à la recherche
-      // et les affiche
-      const matchContacts = contacts.filter(contact => similaire(contact.cle, input) || similaire(contact.nom, input));
-      matchContacts.forEach(contact => $("#" + contact.id).show());
-      // Filtre les contacts qui ne correspondent pas à la recherche
-      // et les cache
-      const noMatchContacts = contacts.filter(contact => !(similaire(contact.cle, input) || similaire(contact.nom, input)));
-      noMatchContacts.forEach(contact => $("#" + contact.id).hide());
-    } else 
-    // Si aucun texte n'est entré dans le champ de recherche, affiche tous les contacts
-      $(".contacts-contact").show();
+    
+    // Cache les contacts dont qui ne sont pas similaire au input
+    filter(contacts, "contacts-contact", input)
   })
   //------------------------------Contacts-------------------------------
 });
+
+
