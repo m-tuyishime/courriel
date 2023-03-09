@@ -58,13 +58,6 @@ const sauvegarder = (key, value) => {
 // Cherche un store dans le localstorage avec la clé passée en paramètre et le renvoie sous forme d'objet
 const chercherStore = key => JSON.parse(localStorage.getItem(key));
 
-// Contracte le panel des destinataires
-const destinataireContract = () => {
-  $(".container-nouv").css("grid-template-rows", "20% 70% 8%");
-  $(".container-destinataires").addClass("hidden");
-  $(".nouv-info").css("grid-template-rows", "50% 50%");
-}
-
 // Ouvre une popup en affichant le fond transparent 
 const ouvrirPopup = $popup => {
   $(".background-fade").removeClass("hidden");
@@ -83,7 +76,7 @@ const cloneComposante = (composanteID, contact) => {
   
   // Clone la composante originale cachée dans le HTML si elle n'existe pas encore
   let $composante;
-  if ($composanteExistante.length === 0) {
+  if ($composanteExistante.length) {
     $composante = $(`#${composanteID}`).clone();
     // Assigne un id a la nouvelle composante et la rend visible
     $composante.attr("id", `${composanteID}-${contact.id}`);
@@ -94,37 +87,48 @@ const cloneComposante = (composanteID, contact) => {
 }
 
 const ajouterContactDestinataires = contact => {
+  // Clone l'element "#destinataire" pour ce contact
   const $composante = cloneComposante("destinataire", contact);
 
   // Met a jour la composante avec les informations du contact.
   if (!contact.nom) {
+    // Si le contact n'a pas de nom, utilise la première lettre de sa clé comme logo et affiche la clé.
     $composante.find(".destinataire-logo p").text(contact.cle[0].toLowerCase());
     $composante.find(".destinataire-nom").text(raccourcirTexte(contact.cle, "cle"));
   } else {
+    // Sinon, utilise la première lettre de son nom en majuscule comme logo et affiche le nom.
     $composante.find(".destinataire-logo p").text(contact.nom[0].toUpperCase());
     $composante.find(".destinataire-nom").text(raccourcirTexte(contact.nom, "nom"));
   }
-  $composante.find(".contacts-user").css("fontSize", "20px");
 
   // Insere la composante dans le carnet des contacts si elle n'est pas deja la
-  if ($(`#contacts-contact-${contact.id}`).length === 0) $(".list-contacts").append($composante);
+  if ($(`#destinataire-${contact.id}`).length) $(".container-destinataires").append($composante);
+
+  // si la composante est clickee remplir le champ de recheche de destinataire
+  $composante.one("click", () => {
+    const $nom = $composante.find(".destinataire-nom").text();
+    $("#nouv-destinataire").val($nom);
+  })
 }
 
 // Crée une carte pour le contact, la met à jour avec les informations passées en argument, et l'insère dans le document HTML
 const ajouterContactCarnet = contact => {
+  // Clone l'element "#contacts-contact" pour ce contact
   const $composante = cloneComposante("contacts-contact", contact);
 
   // Met a jour la composante avec les informations du contact.
   if (!contact.nom) {
+    // Si le contact n'a pas de nom, mettre un logo d'une clé et afficher la clé.
     $composante.find(".logo-utilisateur").attr("src", "./images/cle.svg"); 
     $composante.find(".contacts-user").text(raccourcirTexte(contact.cle, "cle"));
+    // Sinon, afficher le nom.
   } else {
     $composante.find(".contacts-user").text(raccourcirTexte(contact.nom, "nom"));
   }
-  $composante.find(".contacts-user").css("fontSize", "20px");
 
   // Insere la composante dans le carnet des contacts si elle n'est pas deja la
-  if ($(`#contacts-contact-${contact.id}`).length === 0) $(".list-contacts").append($composante);
+  console.log($(`#contacts-contact-${contact.id}`).length);
+  if ($(`#contacts-contact-${contact.id}`).length) $(".list-contacts").append($composante);
   
   // Afficher le contact
   $composante.find(".logo-utilisateur, .contacts-user").on("click", () => {
@@ -229,14 +233,35 @@ $(() => {
 
   //------------------------------Nouveau------------------------------
   // Ouvre le paneau des contacts quand on click sur la selection du destinataire
-  $("#nouv-destinataire").focusin(() => {
-    // Ouvre le paneau
-    $(".container-nouv").css("grid-template-rows", "50% 40% 8%");
-    $(".container-destinataires").removeClass("hidden");
-    $(".nouv-info").css("grid-template-rows", "20% 60% 20%");
-  }).focusout(() => {
-      destinataireContract()
-    });
+  let ouvert = false;
+  $("#nouv-destinataire").on("click", event => {
+    if (ouvert) {
+      // Ferme le panel des destinataires
+      $(".container-nouv").css("grid-template-rows", "20% 70% 8%");
+      $(".container-destinataires").addClass("hidden");
+      $(".nouv-info").css("grid-template-rows", "50% 50%");
+      // Tourne la fleche de bas vers la gauche
+      $("#nouv-destinataire-drop").addClass("rotate-back").removeClass("rotate-90");
+      ouvert = false;
+    } else {
+       // Remplir le paneau des noms ou cles des contacts si il y'en a
+      if (chercherStore("contacts")) {
+        const contacts = chercherStore("contacts").values;
+        contacts.forEach(contact => ajouterContactDestinataires(contact));
+
+        // Ouvre le paneau
+        $(".container-nouv").css("grid-template-rows", "50% 40% 8%");
+        $(".container-destinataires").removeClass("hidden");
+        $(".nouv-info").css("grid-template-rows", "20% 60% 20%");
+
+        // Tourne la fleche de bas vers la droite
+        $("#nouv-destinataire-drop").addClass("rotate-90").removeClass("rotate-back");
+        ouvert = true;
+      }
+    }
+  })
+
+  $("#nouv-sujet, #nouv-message, #nouv-destinataire-drop").on("click", () => $("#nouv-destinataire").trigger("click"));
 
   // Evite d'envoyer un courriel vide
   $("#nouv-destinataire, #nouv-sujet, #nouv-message").on("input", () => {
@@ -315,7 +340,7 @@ $(() => {
   
   // affiche tous les contacts dans le localstorage
   if (chercherStore("contacts")) {
-    let contacts = chercherStore("contacts").values;
+    const contacts = chercherStore("contacts").values;
     contacts.forEach(contact => ajouterContactCarnet(contact));
   }
  
