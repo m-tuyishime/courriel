@@ -1,3 +1,4 @@
+const longueurCle = 216;
 const filter = (valeurs, composanteID, input) => {
   // Si l'utilisateur a entré quelque chose dans le champ de recherche
   if (input) {
@@ -350,7 +351,7 @@ $(() => {
       // La variable de la clé de l'addresse du déstinataire
       let cle;
       // Si destinataire est une cle
-      if (destinataire.length === 210)
+      if (destinataire.length === longueurCle)
         cle = destinataire;
       // Si il n'y a pas de contact dans le localstorage
       else if (!chercherStore("contacts")) 
@@ -375,8 +376,6 @@ $(() => {
           // Cherche la carte du contact qui affiche le même nom que destinataire parmis les
           // cartes du carnet de contacts
           const $contact = $("p.contacts-user:contains('" + destinataire + "')").parent();
-          console.log(destinataire);
-          console.log($contact.attr("id"));
           // Si la carte est trouvé
           if ($contact.length) {
             // Cherche la valeur de l'attribut "id" de $contact
@@ -440,16 +439,31 @@ $(() => {
   //ouvrir le popup pour ajouter un contact
   $(".btn-ajouter-contact").on("click" , () => {
     ouvrirPopup($("#pop-contact"));
-    //sauvegarder le contact dans le localstorage lorsque le bouton est cliqué
+    //sauvegarder le contact dans le localstorage lorsque le boutton d'enregistrement est cliqué
     $("#pop-contact .pop-contact-btn").on("click", () => {
-      if($(".pop-contact-cle textarea").val()) {
-        sauvegarder("contacts", {
-          nom: $(".pop-contact-nom input").val(),
-          cle: $(".pop-contact-cle textarea").val()
-        });
-        $(".pop-contact-cle textarea").val("").trigger("input");
-        $(".pop-contact-nom input").val("");
-      }
+      // Prend la valeur du input represantant le nom du contact
+      const nom = $(".pop-contact-nom input").val();
+      // Prend la valeur du input represantant la cle du contact et enleve les espaces
+      const cle = $(".pop-contact-cle textarea").val()
+        .replace(/\s/g, "");
+      // Si la cle a une valeur
+      if(cle) {
+        // Si la cle a la bonne longueur
+        if (cle.length === longueurCle) {
+          // Sauvegarde les informations
+          sauvegarder("contacts", {
+            nom,
+            cle
+          });
+          $(".pop-contact-cle textarea").val("").trigger("input");
+          $(".pop-contact-nom input").val("");
+        // Si la cle n'a pas la bonne longueur
+        } else 
+          return alert(`La longueur de la clé doit être de ${longueurCle} caractères. \n
+          Vous avez ${cle.length}.`)
+      // Si la cle n'a pas de valeur
+      } else 
+        return alert("Vous devez attribuer une clé au contact");
     });
   })
 
