@@ -76,7 +76,7 @@ const cloneComposante = (composanteID, contact) => {
   
   // Clone la composante originale cachée dans le HTML si elle n'existe pas encore
   let $composante;
-  if ($composanteExistante.length) {
+  if ($composanteExistante.length === 0) {
     $composante = $(`#${composanteID}`).clone();
     // Assigne un id a la nouvelle composante et la rend visible
     $composante.attr("id", `${composanteID}-${contact.id}`);
@@ -101,14 +101,15 @@ const ajouterContactDestinataires = contact => {
     $composante.find(".destinataire-nom").text(raccourcirTexte(contact.nom, "nom"));
   }
 
-  // Insere la composante dans le carnet des contacts si elle n'est pas deja la
-  if ($(`#destinataire-${contact.id}`).length) $(".container-destinataires").append($composante);
+  // Insere la composante dans la liste des desinataire si elle n'est pas deja la
+  if ($(`#destinataire-${contact.id}`).length === 0) $(".container-destinataires").append($composante);
 
   // si la composante est clickee remplir le champ de recheche de destinataire
   $composante.one("click", () => {
     const $nom = $composante.find(".destinataire-nom").text();
     $("#nouv-destinataire").val($nom);
   })
+
 }
 
 // Crée une carte pour le contact, la met à jour avec les informations passées en argument, et l'insère dans le document HTML
@@ -126,10 +127,8 @@ const ajouterContactCarnet = contact => {
     $composante.find(".contacts-user").text(raccourcirTexte(contact.nom, "nom"));
   }
 
-  // Insere la composante dans le carnet des contacts si elle n'est pas deja la
-  console.log($(`#contacts-contact-${contact.id}`).length);
-  
-  if ($(`#contacts-contact-${contact.id}`).length) $(".list-contacts").append($composante);
+  // Insere la composante dans le carnet des contacts si elle n'est pas deja la  
+  if ($(`#contacts-contact-${contact.id}`).length === 0) $(".list-contacts").append($composante);
   
   // Afficher le contact
   $composante.find(".logo-utilisateur, .contacts-user").on("click", () => {
@@ -161,8 +160,9 @@ const ajouterContactCarnet = contact => {
     supprimer("contacts", {
       id: contact.id
     })
-    $composante.off();
+
     $composante.remove();
+    $(`#destinataire-${contact.id}`).remove();
   })
 }
 
