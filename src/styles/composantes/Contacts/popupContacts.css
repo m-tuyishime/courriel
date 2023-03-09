@@ -1,0 +1,61 @@
+/* --------------------------------pop-contact -------------------------------*/
+.pop-contact {
+    grid-template-rows: 10% 12% 66% 3.08vh;
+}
+
+.pop-contact-header {
+    grid-template-columns: 90% 10%;
+}
+
+.pop-contact-header * {
+    margin: auto;
+    font-size: 32px;
+    color: #1E1E1E;
+}
+
+.pop-contact-cle {
+    display: grid;
+    grid-template-columns: 10% 90%;
+}
+
+.pop-contact-cle img {
+    margin: 0 auto 0 auto;
+}
+
+.pop-contact-cle textarea {
+    margin: 2% 3% 2% 0;
+    font-size: 24px;
+}
+
+.pop-contact-btn {
+    margin-right: 3%;
+    margin-left: auto;
+    display: grid;
+    grid-template-columns: 70% 15%;
+    column-gap: 2%;
+    width: 20%;
+    height: 3.08vh;
+    border: none;
+    background-color: transparent;
+}
+
+.pop-contact-btn div {
+    background-color: #545454;
+    height: 3.08vh;
+    border-radius: 15px 0px 0px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.pop-contact-btn div p {
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 auto 0 auto;
+}
+
+.pop-contact-btn img {
+    height: 3.08vh;
+}
+
+/* --------------------------------pop-contact -------------------------------*/

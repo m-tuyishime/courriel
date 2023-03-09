@@ -1,0 +1,54 @@
+/* --------------------------------BARRE DE HAUT -------------------------------*/
+header {
+    width: 100%;
+    background: linear-gradient(180deg, #70ff59 0%, rgba(217, 255, 193, 0) 100%);
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.container-logo,
+.container-adresse {
+    display: inline-grid;
+}
+
+.container-logo {
+    grid-template-columns: 40% 60%;
+    column-gap: 1vw;
+    margin-left: 4vh;
+    margin-right: auto;
+}
+
+.container-logo img {
+    width: 81px;
+    margin: auto;
+}
+
+.container-logo h1 {
+    margin: auto;
+    margin-left: 0;
+    font-size: 40px;
+}
+
+.container-adresse {
+    background-color: black;
+    opacity: 0.65;
+    color: white;
+    border-radius: 0 0 0 30px;
+    grid-template-columns: 20% 80%;
+    padding-top: 1vh;
+    padding-bottom: 2vh;
+}
+
+.titre-adresse {
+    margin-left: auto;
+    font-size: 32px;
+}
+
+.adresse {
+    margin: auto;
+    width: 95%;
+    font-size: 15px;
+    line-height: 2vh;
+}
+
+/* --------------------------------BARRE DE HAUT -------------------------------*/

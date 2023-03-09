@@ -1,0 +1,33 @@
+/* --------------------------------pop-courriel -------------------------------*/
+.pop-courriel {
+    grid-template-rows: 12% 10% 78%;
+}
+
+.pop-courriel-header {
+    grid-template-columns: 82% 8% 10%;
+    padding-left: 2%;
+}
+
+.pop-courriel-header h1 {
+    color: #1E1E1E;
+    margin: auto;
+    margin-left: 0.6vw;
+}
+
+.pop-courriel-nom {
+    padding: 0 3% 0 3%;
+    grid-template-columns: 12% 80% !important;
+}
+
+.pop-courriel-nom * {
+    margin-left: 0;
+}
+
+.pop-courriel-text {
+    width: 94%;
+    height: 95%;
+    margin: auto;
+    font-size: 20px;
+}
+
+/* --------------------------------pop-courriel -------------------------------*/

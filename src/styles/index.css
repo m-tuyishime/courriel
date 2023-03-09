@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 35px;
+}
+
+input,
+textarea {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.accueil {
+  height: 100vh;
+  background-color: #efefef;
+  display: grid;
+  grid-template-rows: 10% 84%;
+  row-gap: 3%;
+}
+
+main {
+  display: grid;
+  grid-template-rows: 37% 57%;
+  row-gap: 6%;
+  width: 80%;
+  margin: 0 auto 0 auto;
+}
+
+.premiere-range {
+  display: grid;
+  grid-template-rows: 15% 80%;
+  row-gap: 5%;
+}
+
+.deuxieme-range {
+  display: grid;
+  grid-template-columns: 55% 35%;
+  column-gap: 10%;
+}

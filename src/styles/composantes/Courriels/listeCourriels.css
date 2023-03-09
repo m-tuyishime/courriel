@@ -1,0 +1,74 @@
+/* --------------------------------BARRE DE RECHERCHE DES MESSAGES -------------------------------*/
+.recherche-messages {
+    background-color: white;
+    border: black solid 1px;
+    border-radius: 50px;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 5% 95%;
+}
+
+.recherche-messages:hover {
+    border-width: 3px;
+}
+
+.recherche-messages img {
+    margin: auto;
+}
+
+.recherche-messages input {
+    font-size: 24px;
+}
+
+/* --------------------------------BARRE DE RECHERCHE DES MESSAGES -------------------------------*/
+
+/* --------------------------------MESSAGES -------------------------------*/
+.container-courriels {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(180deg,
+            #78b8f3 0%,
+            rgba(120, 100, 247, 0.14) 100%);
+    border-radius: 25px;
+    margin: 0 auto auto auto;
+    display: grid;
+}
+
+.courriel {
+    background-color: white;
+    width: 95%;
+    border-radius: 20px;
+    margin: 1vh auto auto auto;
+    display: inline-grid;
+    grid-template-columns: 8% 24% 30% 30% 8%;
+    grid-template-rows: 5.5vh;
+}
+
+.courriel img {
+    margin: auto;
+}
+
+.courriel p {
+    margin: auto 0 auto 0;
+}
+
+.courriel .expediteur {
+    font-size: 24px;
+}
+
+.courriel .objet {
+    font-size: 20px;
+}
+
+.courriel .destinataire {
+    font-size: 15px;
+}
+
+.aucun-message {
+    color: white;
+    margin: auto;
+    font-size: 28px;
+}
+
+/* --------------------------------MESSAGES -------------------------------*/
