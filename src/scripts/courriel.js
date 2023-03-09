@@ -395,8 +395,7 @@ $(() => {
         expediteur: $(".addresse").text(),
         destinataire: cle, 
         sujet, 
-        message,
-        lu: false
+        message
       });
       // Réinitialise les champs
       $("#nouv-destinataire").val("").trigger("input");
@@ -441,15 +440,22 @@ $(() => {
     ouvrirPopup($("#pop-contact"));
     //sauvegarder le contact dans le localstorage lorsque le boutton d'enregistrement est cliqué
     $("#pop-contact .pop-contact-btn").on("click", () => {
-      // Prend la valeur du input represantant le nom du contact
+      // Prend la valeur du input représantant le nom du contact
       const nom = $(".pop-contact-nom input").val();
-      // Prend la valeur du input represantant la cle du contact et enleve les espaces
+      // Prend la valeur du input représantant la clé du contact et enleve les espaces
       const cle = $(".pop-contact-cle textarea").val()
         .replace(/\s/g, "");
-      // Si la cle a une valeur
+      // Si la clé a une valeur
       if(cle) {
-        // Si la cle a la bonne longueur
+        // Si la clé a la bonne longueur
         if (cle.length === longueurCle) {
+          // Check si la clé est deja utilisée par un autre contact
+          if (chercherStore("contacts")) {
+            const contacts = chercherStore("contacts").valeurs;
+            const contactDejaLa = contacts.some(contact => contact.cle = cle);
+            if (contactDejaLa)
+              return alert("Vous avez déjà un contact associé à cette clé");
+          }
           // Sauvegarde les informations
           sauvegarder("contacts", {
             nom,
@@ -457,13 +463,14 @@ $(() => {
           });
           $(".pop-contact-cle textarea").val("").trigger("input");
           $(".pop-contact-nom input").val("");
-        // Si la cle n'a pas la bonne longueur
+        // Si la clé n'a pas la bonne longueur
         } else 
           return alert(`La longueur de la clé doit être de ${longueurCle} caractères. \n
           Vous avez ${cle.length}.`)
-      // Si la cle n'a pas de valeur
-      } else 
+      // Si la clé n'a pas de valeur
+      } else { 
         return alert("Vous devez attribuer une clé au contact");
+      }
     });
   })
 
