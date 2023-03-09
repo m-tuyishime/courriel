@@ -128,6 +128,7 @@ const ajouterContactCarnet = contact => {
 
   // Insere la composante dans le carnet des contacts si elle n'est pas deja la
   console.log($(`#contacts-contact-${contact.id}`).length);
+  
   if ($(`#contacts-contact-${contact.id}`).length) $(".list-contacts").append($composante);
   
   // Afficher le contact
