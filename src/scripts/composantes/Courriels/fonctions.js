@@ -39,9 +39,9 @@ const ajouterCourrielRecu = courriel => {
     // Insere la composante dans la liste des courriels si elle n'est pas deja la
     if ($(`#courriel-${courriel.id}`).length === 0) $(".container-courriels").append($composante);
 
-    // Si la composante est clickée, la remplir d'informations
+    // Si la composante est clickée, rempli sa popup d'informations
     $composante.find(".ouvre-popup").one("click", () => {
-        // Marque le courriel comme lu et se rappele grace au storage
+        // Marque le courriel dans la liste des courriels comme lu et se rappele grace au storage
         $composante.addClass("courriel-lu");
         $composante.find(".logo-courriel").attr("src", "./images/message-lu.svg");
         courriel.lu = true;
@@ -50,9 +50,15 @@ const ajouterCourrielRecu = courriel => {
         // Rempli la popup d'informations sur le courriel en question
         const $popup = $(".pop-courriel");
         $popup.find(".pop-courriel-header h1").text(courriel.sujet);
-        $popup.find(".pop-courriel-expediteur").text(courriel.expediteur);
+        // Si l'expediteur est connu, montre son nom dans la popup
+        if (courriel.expediteurNom)
+            $popup.find(".pop-courriel-expediteur").text(nomExpediteur);
+        // Sinon montre sa cle au complet
+        else
+            $popup.find(".pop-courriel-expediteur").text(courriel.expediteur);
         $popup.find(".pop-courriel-text").text(courriel.message);
-        // écouter la suppression de l'e-mail par la popup
+
+        // écoute la suppression de l'e-mail par la popup
         $popup.find(".pop-poubelle").one("click", () => {
             supprimer("messagesRecus", courriel);
             $composante.remove();
@@ -60,7 +66,7 @@ const ajouterCourrielRecu = courriel => {
         })
     })
 
-    // écouter la suppression de l'e-mail par la liste des emails
+    // écoute la suppression de l'e-mail par la liste des emails
     $composante.find(".delete-courriel").one("click", () => {
         supprimer("messagesRecus", courriel);
         $composante.remove();
