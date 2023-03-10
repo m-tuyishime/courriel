@@ -1,4 +1,14 @@
 /* --------------------------------NOUVEAU -------------------------------*/
+.rotate-90 {
+    transform: rotate(-90deg);
+    transition: transform 1s;
+}
+
+.rotate-back {
+    transform: rotate(0);
+    transition: transform 1s;
+}
+
 .container-nouv {
     display: grid;
     grid-template-rows: 20% 70% 8%;

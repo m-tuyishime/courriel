@@ -44,7 +44,7 @@ $(() => {
                     // Check si la clé est deja utilisée par un autre contact
                     if (chercherStore("contacts")) {
                         const contacts = chercherStore("contacts").valeurs;
-                        const contactDejaLa = contacts.some(contact => contact.cle = cle);
+                        const contactDejaLa = contacts.some(contact => contact.cle === cle);
                         if (contactDejaLa)
                             return alert("Vous avez déjà un contact associé à cette clé");
                     }

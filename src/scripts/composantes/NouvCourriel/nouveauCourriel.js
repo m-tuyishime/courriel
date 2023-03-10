@@ -11,7 +11,7 @@ $(() => {
       $("#nouv-destinataire-drop").addClass("rotate-back").removeClass("rotate-90");
       ouvert = false;
     } else {
-       // Remplir le paneau des noms ou cles des contacts si il y'en a
+      // Remplir le paneau des noms ou cles des contacts si il y'en a
       if (chercherStore("contacts")) {
         const contacts = chercherStore("contacts").valeurs;
         contacts.forEach(contact => ajouterContactDestinataires(contact));
@@ -24,14 +24,14 @@ $(() => {
         // Tourne la fleche de bas vers la droite
         $("#nouv-destinataire-drop").addClass("rotate-90").removeClass("rotate-back");
 
-         // Lorsqu'un utilisateur tape quelque chose dans le champ de recherche de contacts, filtre les contacts
+        // Lorsqu'un utilisateur tape quelque chose dans le champ de recherche de contacts, filtre les contacts
         $(event.currentTarget).on("input", event => {
           // Récupère tous les contacts depuis le store 'contacts'
           const contacts = chercherStore("contacts").valeurs;
-          
+
           // Récupère la valeur actuelle du champ de recherche
           const input = $(event.currentTarget).val();
-          
+
           // Cache les contacts dont qui ne sont pas similaire au input
           filter(contacts, "destinataire", input)
         })
@@ -43,6 +43,7 @@ $(() => {
   // Ferme le paneau quand on click dans d'autres champs
   $("#nouv-sujet, #nouv-message, #nouv-destinataire-drop").on("click", () => $("#nouv-destinataire").trigger("click"));
 
+
   // Change l'apparence du boutton d'envoi pour indiquer si il est clickable ou pas
   $("#nouv-destinataire, #nouv-sujet, #nouv-message").on("input", () => {
     const $destinataire = $("#nouv-destinataire")
@@ -50,7 +51,7 @@ $(() => {
     const sujet = $("#nouv-sujet").val();
     const message = $("#nouv-message").val()
     // Verifie que les champs necessaires sont remplis
-    if(destinataire && sujet && message) 
+    if (destinataire && sujet && message)
       // Rend le boutton d'envoi plus foncé
       $(".nouv-btn-envoyer").removeClass("disabled");
     else
@@ -58,14 +59,17 @@ $(() => {
       $(".nouv-btn-envoyer").addClass("disabled");
   });
 
+
   // Rend le boutton d'envoi clickable si les conditions sont remplies
   $(".nouv-btn-envoyer").on("click", () => {
     const $destinataire = $("#nouv-destinataire")
     const destinataire = $destinataire.val();
     const sujet = $("#nouv-sujet").val();
-    const message = $("#nouv-message").val()
+    const message = $("#nouv-message").val();
+    const expediteur = $(".adresse").text();
+
     // Verifie que les champs necessaires sont remplis
-    if(destinataire && sujet && message) {
+    if (destinataire && sujet && message) {
       if (sujet.length > 50)
         return alert("La ligne d'objet ne doit pas dépasser 50 caractères.");
       if (message.length > 200)
@@ -77,7 +81,7 @@ $(() => {
       if (destinataire.length === longueurCle)
         cle = destinataire;
       // Si il n'y a pas de contact dans le localstorage
-      else if (!chercherStore("contacts")) 
+      else if (!chercherStore("contacts"))
         return alert(`Vous avez aucun contact nommée "${destinataire}"`);
       else {
         // Cherche les contacts
@@ -94,7 +98,7 @@ $(() => {
             cle = contact.cle;
           else
             return alert(`Vous avez aucun contact nommée "${destinataire}"`);
-        // Si l'utilisateur n'a pas sélectionné un des options de destinataire
+          // Si l'utilisateur n'a pas sélectionné un des options de destinataire
         } else {
           // Cherche la carte du contact qui affiche le même nom que destinataire parmis les
           // cartes du carnet de contacts
@@ -113,13 +117,25 @@ $(() => {
             return alert(`Vous avez aucun contact nommée "${destinataire}"`);
         }
       }
+
       // sauvegarde le courriel a envoyer dans le localstorage
-      sauvegarder("messagesEnvoyes", { 
-        expediteur: $(".addresse").text(),
-        destinataire: cle, 
-        sujet, 
+      sauvegarder("messagesEnvoyes", {
+        expediteur,
+        destinataire: cle,
+        sujet,
         message
       });
+
+      // Si l'utilisateur s'envoi lui-même un courriel
+      if (cle === expediteur)
+        sauvegarder("messagesRecus", {
+          expediteur,
+          destinataire: cle,
+          sujet,
+          message,
+          lu: false
+        });
+
       // Réinitialise les champs
       $("#nouv-destinataire").val("").trigger("input");
       $("#nouv-sujet").val("");

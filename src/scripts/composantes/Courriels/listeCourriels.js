@@ -1,6 +1,6 @@
 $(() => {
-    // affiche tous les contacts dans le localstorage
-    const storeName = "messagesEnvoyes";
+    // affiche tous les courriels dans le localstorage dans la liste des courriels
+    const storeName = "messagesRecus";
     if (chercherStore(storeName)) {
         $(".aucun-message").removeClass("hidden");
         const courriels = chercherStore(storeName).valeurs;

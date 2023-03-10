@@ -81,13 +81,3 @@ p {
   cursor: pointer;
   border: 2px solid black;
 }
-
-.rotate-90 {
-  transform: rotate(-90deg);
-  transition: transform 1s;
-}
-
-.rotate-back {
-  transform: rotate(0);
-  transition: transform 1s;
-}

@@ -41,7 +41,7 @@
     border-radius: 20px;
     margin: 1vh auto auto auto;
     display: inline-grid;
-    grid-template-columns: 8% 24% 30% 30% 8%;
+    grid-template-columns: 10% 37% 45% 8%;
     grid-template-rows: 5.5vh;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .courriel .objet {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .courriel .destinataire {

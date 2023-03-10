@@ -4,14 +4,19 @@
 }
 
 .pop-courriel-header {
-    grid-template-columns: 82% 8% 10%;
-    padding-left: 2%;
+    grid-template-columns: 78% 10% 12%;
+    padding-left: 6%;
 }
 
 .pop-courriel-header h1 {
+    overflow-x: scroll;
     color: #1E1E1E;
     margin: auto;
-    margin-left: 0.6vw;
+    width: 100%;
+}
+
+.pop-courriel-header h1::-webkit-scrollbar {
+    height: 1vh;
 }
 
 .pop-courriel-nom {
@@ -23,11 +28,27 @@
     margin-left: 0;
 }
 
+.pop-courriel-expediteur {
+    overflow-x: scroll;
+    max-width: 100%;
+}
+
+.pop-courriel-expediteur::-webkit-scrollbar {
+    height: 0.5vh;
+}
+
 .pop-courriel-text {
     width: 94%;
     height: 95%;
     margin: auto;
     font-size: 20px;
+    overflow-y: scroll;
 }
+
+.pop-courriel-text::-webkit-scrollbar {
+    height: 1vh;
+}
+
+
 
 /* --------------------------------pop-courriel -------------------------------*/

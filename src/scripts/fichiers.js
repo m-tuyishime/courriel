@@ -23,7 +23,7 @@ styleUrls.forEach(url => {
 // Tableau d'URL de fichiers de script
 const scriptsChemin = "./scripts/";
 const scriptUrls = [
-  "stockage.js",
+  "store.js",
   "reutilisables.js",
   "composantes/navbar.js",
   "composantes/Contacts/carnetContacts.js",
@@ -31,7 +31,6 @@ const scriptUrls = [
   "composantes/Contacts/popupContacts.js",
   "composantes/Courriels/fonctions.js",
   "composantes/Courriels/listeCourriels.js",
-  "composantes/Courriels/popupCourriels.js",
   "composantes/NouvCourriel/fonctions.js",
   "composantes/NouvCourriel/nouveauCourriel.js"
 ].map(nom => scriptsChemin + nom);

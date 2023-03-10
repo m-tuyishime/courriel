@@ -41,6 +41,7 @@ const fermerPopup = $popup => {
     $popup.addClass("hidden");
 }
 
+// Clone un element HTML basee sur son id
 const cloneComposante = (composanteID, contact) => {
     // Recherche s'il y a déjà une composante pour ce contact dans le document HTML.
     const $composanteExistante = $(`#${composanteID}-${contact.id}`);
@@ -85,6 +86,7 @@ const raccourcirTexte = (texte, type) => {
         } else {
             return texte.substring(0, 16) + "..."; // Si le nom ne contient pas d'espace prendre les 16 premiers caractères et ajouter des points de suspension
         }
-    }
+    } else if (type === "sujet" && texte.length > 39)
+        return texte.substring(0, 39) + "...";
     return texte; // Renvoie le texte si il est déjà assez court
 }
