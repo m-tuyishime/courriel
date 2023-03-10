@@ -1,6 +1,3 @@
-// Longueur d'une cle d'addresse
-const longueurCle = 216;
-
 // Cache les composantes dont la valeur n'est pas egal au input
 const filter = (valeurs, composanteID, input) => {
     // Si l'utilisateur a entré quelque chose dans le champ de recherche
