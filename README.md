@@ -1,46 +1,44 @@
-# Interface web pour un système de messagerie (courriel)
+# Courriel - Interface Web pour un Système de Messagerie
 
-Courriel est un système de messagerie pair-à-pair, c.-à-d., sans serveur centrale.
+Courriel est un système de messagerie pair-à-pair, c'est-à-dire sans serveur central. 
+Ce projet se compose de deux parties : 
+une interface web pour le courriel et un mini-serveur permettant le partage (distribution) des courriels (messages) entre plusieurs utilisateurs.
 
-Le projet courriel est séparé en deux parties:
+## Installation
+L'interface web est accessible à l'URL suivante : **https://m-tuyishime.github.io/courriel/**
 
-1. **Projet 1:** Interface web pour le courriel (code en **html**, **css** et **js**, à exécuter par un navigateur).
-
-2. **Projet 2:** Un mini-serveur permettant le partage (distribution) des courriels (messages) entre plusieurs utilisateurs.
-
-## Projet 1
-
-Créer une page web (html) pour le courriel.
-
-L'interface WEB devrait pouvoir:
+## Fonctionnalités
+L'interface web permet de :
 
 1. Visualiser et rechercher la liste de messages
 2. Composer un nouveau message.
 3. Visualiser, rechercher et modifier le carnet d'adresses
 
-Un message ne contient que du texte. Par exemple:
+Un message ne contient que du texte et une adresse (dans le carnet d'adresse) est une chaîne de caractères représentant une clé publique.
 
-"Exemple d'un message\n ...\n voilà"
-
-Une adresse (dans le carnet d'adresse) est une chaîne de caractères représentant une clé publique, par exemple
-
------BEGIN PUBLIC KEY-----
+-----BEGIN PUBLIC KEY-----<br>
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXPxCId4OAGDFmTqDZIJXAZnfp
 xovsGt0Foqki3xymwxVvFqZWbG/8tJHB1sXUKZUHykOtgA6CNqehGIPjRbf1EVdF
 hKREB5T2zWKpXFi7aJ3aF1c946gxiQYJofWOkWx/XpSEp6uwBNsznpFsreU0p6fs
-gTxLHeAaZ7VQpySIpQIDAQAB
+gTxLHeAaZ7VQpySIpQIDAQAB<br>
 -----END PUBLIC KEY-----
 
-Dans le cadre du projet 1, vous allez rendre la liste de messages et le carnet d'adresses persistants, en utilisant **localStorage**.
+La liste de messages et le carnet d'adresses sont persistants grâce à l'utilisation de **localStorage**.
 
-Chaque groupe (de 1 à 5 personnes) devrait produire:
+## Structure du Projet
+Ce projet se compose de deux parties :
 
-- un document courriel.html accompagné par des documents
-- \*.css et
-- \*.js.
+## Projet 1
+Le projet 1 est l'interface web pour le courriel. Chaque groupe (de 1 à 5 personnes) doit produire :
+
+- un document **"courriel.html"** accompagné des documents **"\*.css"** et **"\*.js.""**
+
+## Projet 2
+Le projet 2 est le mini-serveur permettant le partage des courriels entre plusieurs utilisateurs.
 
 ## Évaluation
+L'évaluation se fera selon les critères suivants :
 
-    1.Qualité et présentation du document html : 40%
-    2.Qualité et présentation du document css : 30%
-    3.Qualité, présentation et structure du code java-script : 30%
+1. Qualité et présentation du document HTML : 40%
+2. Qualité et présentation du document CSS : 30%
+3. Qualité, présentation et structure du code JavaScript : 30%
