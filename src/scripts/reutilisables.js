@@ -1,17 +1,31 @@
 // Longueur d'une cle d'addresse
 const longueurCle = 216;
 
+// Cache les composantes dont la valeur n'est pas egal au input
 const filter = (valeurs, composanteID, input) => {
     // Si l'utilisateur a entré quelque chose dans le champ de recherche
     if (input) {
+        let matchs;
+        let noMatchs;
+
+        // Critères de similarité pour le carnet de contact
+        if (composanteID === "contacts-contact") {
+            matchs = valeurs.filter(contact => similaire(contact.cle, input) || similaire(contact.nom, input));
+            noMatchs = valeurs.filter(contact => !(similaire(contact.cle, input) || similaire(contact.nom, input)));
+        }
+        // Critères de similarité pour la liste de courriels
+        if (composanteID === "courriel") {
+            matchs = valeurs.filter(courriel => similaire(courriel.expediteur, input) || similaire(courriel.sujet, input) || similaire(courriel.message, input) || similaire(courriel.expediteurNom, input));
+            noMatchs = valeurs.filter(courriel => !(similaire(courriel.expediteur, input) || similaire(courriel.sujet, input) || similaire(courriel.message, input) || similaire(courriel.expediteurNom, input)));
+        }
+
         // Filtre les valeurs qui correspondent à la recherche
         // et les affiche
-        const matchContacts = valeurs.filter(contact => similaire(contact.cle, input) || similaire(contact.nom, input));
-        matchContacts.forEach(contact => $(`#${composanteID}-${contact.id}`).show());
+        matchs.forEach(match => $(`#${composanteID}-${match.id}`).show());
+
         // Filtre les valeurs qui ne correspondent pas à la recherche
         // et les cache
-        const noMatchContacts = valeurs.filter(contact => !(similaire(contact.cle, input) || similaire(contact.nom, input)));
-        noMatchContacts.forEach(contact => $(`#${composanteID}-${contact.id}`).hide());
+        noMatchs.forEach(match => $(`#${composanteID}-${match.id}`).hide());
     } else
         // Si aucun texte n'est entré dans le champ de recherche, affiche tous les valeurs
         $("." + composanteID).show();

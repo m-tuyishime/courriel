@@ -20,9 +20,13 @@ const ajouterCourrielRecu = courriel => {
         // Cherche un contact avec la même clé que l'expéditeur
         const contacts = chercherStore("contacts").valeurs;
         const expediteurContact = contacts.find(contact => contact.cle === cleExpediteur)
-        if (expediteurContact)
+        if (expediteurContact) {
             // Assigne au nom de l'expediteur du courriel le nom du contact sous format raccourci au besoin
+            // et sauvegarde le lien
             nomExpediteur = raccourcirTexte(expediteurContact.nom, "nom");
+            courriel.expediteurNom = expediteurContact.nom;
+            sauvegarder("messagesRecus", courriel)
+        }
     }
 
     // Met a jour la composante avec le nom de l'expediteur et le sujet raccourci au besoin

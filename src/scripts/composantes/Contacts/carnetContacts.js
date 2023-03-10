@@ -7,6 +7,9 @@ $(() => {
 
   // Lorsqu'un utilisateur tape quelque chose dans le champ de recherche de contacts, filtre les contacts
   $(".recherche-contacts input").on("input", event => {
+    // Evite de chercher alors qu'il n'a pas de contact
+    if (!chercherStore("contacts")) return;
+
     // Récupère tous les contacts depuis le store 'contacts'
     const contacts = chercherStore("contacts").valeurs;
 
