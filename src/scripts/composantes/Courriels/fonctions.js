@@ -15,8 +15,11 @@ const ajouterCourrielRecu = courriel => {
     // Assigne au nom de l'expediteur du courriel sa clé sous format raccourci au besoin
     const cleExpediteur = courriel.expediteur;
     let nomExpediteur = raccourcirTexte(cleExpediteur, "cle");
+    // Vérifie si le courriel a déjà un nom assigné
+    if (courriel.expediteurNom)
+        nomExpediteur = raccourcirTexte(courriel.expediteurNom, "nom");
     // Si l'utilisateur a des contacts
-    if (chercherStore("contacts")) {
+    else if (chercherStore("contacts")) {
         // Cherche un contact avec la même clé que l'expéditeur
         const contacts = chercherStore("contacts").valeurs;
         const expediteurContact = contacts.find(contact => contact.cle === cleExpediteur)

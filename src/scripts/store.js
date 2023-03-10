@@ -51,10 +51,16 @@ $(() => {
   // Fonction déclenchée lorsqu'un élément du stockage local est modifié
   $(window).on("storage", event => {
     switch (event.originalEvent.key) {
-      // Si l'élément modifié est "contacts", ajouter le nouveau contact
+      // Si l'élément modifié est un des contacts, ajouter le nouveau contact
       case "contacts":
         const contact = JSON.parse(event.originalEvent.newValue);
         ajouterContactCarnet(contact);
+        break;
+
+      case "messagesRecus":
+        $(".aucun-message").addClass("hidden");
+        const courriel = JSON.parse(event.originalEvent.newValue);
+        ajouterCourrielRecu(courriel);
         break;
     }
   });
