@@ -118,13 +118,13 @@ $(() => {
         }
       }
 
-      // // sauvegarde le courriel a envoyer dans le localstorage
-      // sauvegarder("messagesEnvoyes", {
-      //   expediteur,
-      //   destinataire: cle,
-      //   sujet,
-      //   message
-      // });
+      // sauvegarde le courriel a envoyer dans le localstorage
+      sauvegarder("messagesEnvoyes", {
+        expediteur,
+        destinataire: cle,
+        sujet,
+        message
+      });
 
       // Si l'utilisateur s'envoi lui-même un courriel
       if (cle === expediteur)

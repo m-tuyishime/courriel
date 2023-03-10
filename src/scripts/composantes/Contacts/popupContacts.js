@@ -35,8 +35,8 @@ $(() => {
             // Prend la valeur du input représantant le nom du contact
             const nom = $(".pop-contact-nom input").val();
             // Prend la valeur du input représantant la clé du contact et enleve les espaces
-            const cle = $(".pop-contact-cle textarea").val()
-                .replace(/\s/g, "");
+            const cle = $(".pop-contact-cle textarea").val().replace(/\s/g, "");
+
             // Si la clé a une valeur
             if (cle) {
                 // Si la clé a la bonne longueur
@@ -64,5 +64,8 @@ $(() => {
                 return alert("Vous devez attribuer une clé au contact");
             }
         });
+
+        // Enleve l'ecoute du boutton d'enregistrement quand on ferme la popup
+        $(".pop-contact .pop-fermer").one("click", () => $("#pop-contact .pop-contact-btn").off())
     })
 })
