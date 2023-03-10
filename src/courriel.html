@@ -2,22 +2,32 @@
 <html lang="en">
 
 <head>
+  <!-- Définit l'encodage des caractères -->
   <meta charset="UTF-8" />
+  <!-- Indique au navigateur d'utiliser la dernière version d'Internet Explorer -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Permet d'adapter le contenu à la taille de l'écran -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Titre de la page -->
   <title>Courriel</title>
+  <!-- Ajoute la bibliothèque jQuery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <!-- Ajoute un fichier JavaScript pour gérer les fichiers -->
   <script type="text/javascript" src="./scripts/fichiers.js"></script>
 </head>
 
 <body>
+  <!-- Partie visible -->
   <div class="accueil">
+    <!-- En-tête de la page -->
     <header>
+      <!-- Logo et titre du site -->
       <div class="container-logo">
         <img src="./images/courriel-logo.png" alt="logo du site web" />
         <h1>Courriel</h1>
       </div>
+      <!-- Clé d'adresse de l'utilisateur -->
       <div class="container-adresse">
         <h2 class="titre-adresse">Adresse:</h2>
         <p class="adresse">
@@ -28,34 +38,51 @@
         </p>
       </div>
     </header>
+    <!-- En-tête de la page -->
+
+    <!-- Contenu principal de la page -->
     <main>
+      <!-- Première rangée (barre de recherche des courriel et liste des courriels) -->
       <div class="premiere-range">
+        <!-- Barre de recherche -->
         <div class="recherche-messages">
           <img src="./images/loupe.svg" alt="logo de recherche" />
           <input type="search" placeholder="Chercher un courriel" />
         </div>
+        <!-- Liste des courriels -->
         <ul class="container-courriels scroll">
+          <!-- Message affiché s'il n'y a aucun courriel -->
           <p class="hidden aucun-message">Vous avez aucun message</p>
+          <!-- Un courriel modèle de la liste caché -->
           <li class="clickable courriel hidden" id="courriel">
+            <!-- Partie du courriel qui ouvre une popup avec les détails du courriel -->
             <div class="ouvre-popup">
               <img class="logo-courriel" src="" alt="logo de courriel" />
               <p class="expediteur"></p>
               <p class="objet"></p>
             </div>
+            <!-- Partie du courriel qui supprime le courriel -->
             <div class="delete-courriel">
               <img src="./images/message-poubelle.svg" alt="logo de poubelle" />
             </div>
           </li>
         </ul>
       </div>
+      <!-- Première rangée (barre de recherche des courriel et liste des courriels) -->
+
+      <!-- Deuxième rangée (composition d'un nouveau courriel et carnet des contacts) -->
       <div class="deuxieme-range">
+        <!-- Contient les éléments pour composer un nouveau message -->
         <div class="container-nouv">
+          <!-- Contient les informations sur le destinataire et l'objet du message -->
           <div class="nouv-info">
+            <!-- Contient le champ pour sélectionner un destinataire -->
             <div class="container-nouv-destinataire">
               <img src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
               <input id="nouv-destinataire" name="" type="text" placeholder="Sélectionner un destinataire" />
               <img id="nouv-destinataire-drop" class="rotate-back" src="./images/expandre_bas.svg" alt="dropdown-arrow">
             </div>
+            <!-- Contient la liste des destinataires sélectionnés -->
             <div class="container-destinataires hidden scroll">
               <div id="destinataire" class="destinataire hidden">
                 <div class="destinataire-logo">
@@ -64,25 +91,34 @@
                 <p class="destinataire-nom"></p>
               </div>
             </div>
+            <!-- Contient le champ pour l'objet du message -->
             <div class="container-nouv-objet">
               <p>Sujet:</p>
               <input id="nouv-sujet" type="text" />
             </div>
           </div>
+          <!-- Champ pour le corps du message -->
           <textarea id="nouv-message" class="nouv-message" placeholder="Composez un message"></textarea>
           <div class="nouv-footer">
+            <!-- Bouton pour envoyer le message -->
             <button class="clickable nouv-btn-envoyer disabled">
               <img src="./images/envoyer.svg" alt="logo d'envoi" />
               <p>Envoyer</p>
             </button>
           </div>
         </div>
+        <!-- Contient les éléments pour composer un nouveau message -->
+
+        <!-- Contient le carnet des contacts -->
         <div class="container-contacts">
+          <!-- Champ de recherche pour trouver un contact -->
           <div class="recherche-contacts">
             <img src="./images/loupe.svg" alt="logo de recherche">
             <input type="search" placeholder="Chercher un contact" />
           </div>
+          <!-- Liste des contacts -->
           <ul class="list-contacts scroll">
+            <!-- Un contact modèle de la liste caché -->
             <li class="clickable contacts-contact hidden" id="contacts-contact">
               <img class="logo-utilisateur" src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
               <p class="contacts-user"></p>
@@ -90,30 +126,44 @@
               <img class="logo-poubelle" src="./images/poubelle_blanche.svg" alt="logo de poubelle" />
             </li>
           </ul>
+          <!-- Bouton pour ajouter un nouveau contact -->
           <button class="clickable btn-ajouter-contact">
             <img src="./images/nouv_utilisater.svg" alt="logo d'ajouter un utilisateur" />
             <p>Ajouter un contact</p>
           </button>
         </div>
+        <!-- Contient le carnet des contacts -->
       </div>
+      <!-- Deuxième rangée (composition d'un nouveau courriel et carnet des contacts) -->
     </main>
+    <!-- Contenu principal de la page -->
   </div>
+  <!-- Partie visible -->
+
+  <!-- Partie cachée par défaut des popups -->
   <div class="background-fade hidden">
+    <!-- Popup d'ajout de contact -->
     <div class="popup hidden pop-contact" id="pop-contact">
+      <!-- L'entête de la popup -->
       <div class="pop-header pop-contact-header">
+        <!-- Titre de la popup -->
         <h1>Ajouter un contact</h1>
+        <!-- Boutton de fermeture de la popup-->
         <div class="pop-fermer">
           <img src="./images/fermer.svg" alt="logo de fermeture">
         </div>
       </div>
+      <!-- Espace de saisie pour le nom du contact -->
       <div class="pop-nom pop-contact-nom">
         <img src="./images/utilisateur-ajouter.svg" alt="logo d'utilisateur">
         <input type="text" placeholder="Nom">
       </div>
+      <!-- Espace de saisie pour la clé d'adresse du contact -->
       <div class="pop-contact-cle">
         <img src="./images/cle-noire.svg" alt="logo d'une cle">
         <textarea placeholder="Clé"></textarea>
       </div>
+      <!-- Button d'enregistrement du contact -->
       <button class="pop-contact-btn">
         <div>
           <p>Enregistrer</p>
@@ -121,25 +171,35 @@
         <img src="./images/sauvegarde.svg" alt="logo de sauvegarde">
       </button>
     </div>
+    <!-- Popup d'ajout de contact -->
 
+    <!-- Popup d'affichage d'un courriel -->
     <div class="popup pop-courriel hidden">
+      <!-- L'entête de la popup -->
       <div class="pop-header pop-courriel-header">
+        <!-- Sujet du courriel -->
         <h1></h1>
+        <!-- Button de suppression du contact -->
         <div class="pop-poubelle">
           <img src="./images/poubelle_noire.svg" alt="logo d'effacement">
         </div>
+        <!-- Boutton de fermeture de la popup-->
         <div class="pop-fermer">
           <img src="./images/fermer.svg" alt="logo de fermeture">
         </div>
       </div>
+      <!-- Espace d'affichage du nom de l'expéditeur -->
       <div class="pop-courriel-nom pop-nom">
         <p>De :</p>
         <p class="pop-courriel-expediteur" type="text"></p>
       </div>
+      <!-- Espace d'affichage du message du courriel -->
       <p class="pop-courriel-text">
       </p>
     </div>
+    <!-- Popup d'affichage d'un courriel -->
   </div>
+  <!-- Partie cachée par défaut des popups -->
 </body>
 
 </html>
