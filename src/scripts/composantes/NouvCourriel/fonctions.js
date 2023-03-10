@@ -1,17 +1,25 @@
-const ajouterCourrielRecu = courriel => {
-    // Clone l'element "#courriel"
-    const $composante = cloneComposante("courriel", courriel);
+const ajouterContactDestinataires = contact => {
+    // Clone l'element "#destinataire" pour ce contact
+    const $composante = cloneComposante("destinataire", contact);
 
-    // Met a jour la composante avec les informations du courriel.
-    if (!courriel.nom) {
-        // Si le courriel n'a pas de nom, mettre un logo d'une clé et afficher la clé.
-        $composante.find(".logo-utilisateur").attr("src", "./images/cle.svg");
-        $composante.find(".contacts-user").text(raccourcirTexte(courriel.cle, "cle"));
-        // Sinon, afficher le nom.
+    // Met a jour la composante avec les informations du contact.
+    if (!contact.nom) {
+        // Si le contact n'a pas de nom, utilise la première lettre de sa clé comme logo et affiche la clé.
+        $composante.find(".destinataire-logo p").text(contact.cle[0].toLowerCase());
+        $composante.find(".destinataire-nom").text(raccourcirTexte(contact.cle, "cle"));
     } else {
-        $composante.find(".contacts-user").text(raccourcirTexte(courriel.nom, "nom"));
+        // Sinon, utilise la première lettre de son nom en majuscule comme logo et affiche le nom.
+        $composante.find(".destinataire-logo p").text(contact.nom[0].toUpperCase());
+        $composante.find(".destinataire-nom").text(raccourcirTexte(contact.nom, "nom"));
     }
 
-    // Insere la composante dans le carnet des contacts si elle n'est pas deja la  
-    if ($(`#courriel-${courriel.id}`).length === 0) $(".list-contacts").append($composante);
+    // Insere la composante dans la liste des desinataire si elle n'est pas deja la
+    if ($(`#destinataire-${contact.id}`).length === 0) $(".container-destinataires").append($composante);
+
+    // si la composante est clickee remplir le champ de recheche de destinataire
+    $composante.one("click", () => {
+        const $nom = $composante.find(".destinataire-nom").text();
+        $("#nouv-destinataire").val($nom);
+        $("#nouv-destinataire").attr("name", contact.id);
+    })
 }

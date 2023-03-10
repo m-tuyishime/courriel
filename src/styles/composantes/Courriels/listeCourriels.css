@@ -41,8 +41,22 @@
     border-radius: 20px;
     margin: 1vh auto auto auto;
     display: inline-grid;
-    grid-template-columns: 10% 37% 45% 8%;
+    grid-template-columns: 92% 8%;
     grid-template-rows: 5.5vh;
+    overflow: hidden;
+}
+
+.ouvre-popup {
+    display: grid;
+    grid-template-columns: 11% 40% 49%;
+}
+
+.delete-courriel {
+    display: grid;
+}
+
+.delete-courriel:hover {
+    background-color: lightblue;
 }
 
 .courriel img {

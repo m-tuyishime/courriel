@@ -34,13 +34,17 @@
           <img src="./images/loupe.svg" alt="logo de recherche" />
           <input type="search" placeholder="Chercher un courriel" />
         </div>
-        <ul class="container-courriels">
+        <ul class="container-courriels scroll">
           <p class="hidden aucun-message">Vous avez aucun message</p>
           <li class="clickable courriel" id="courriel">
-            <img class="logo-courriel" src="" alt="logo de courriel" />
-            <p class="expediteur">Niko Bellic</p>
-            <p class="objet">I don't want to go bowling...</p>
-            <img src="./images/message-poubelle.svg" alt="logo de poubelle" />
+            <div class="ouvre-popup">
+              <img class="logo-courriel" src="" alt="logo de courriel" />
+              <p class="expediteur">Niko Bellic</p>
+              <p class="objet">I don't want to go bowling...</p>
+            </div>
+            <div class="delete-courriel">
+              <img src="./images/message-poubelle.svg" alt="logo de poubelle" />
+            </div>
           </li>
         </ul>
       </div>

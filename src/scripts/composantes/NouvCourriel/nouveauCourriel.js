@@ -66,7 +66,7 @@ $(() => {
     const destinataire = $destinataire.val();
     const sujet = $("#nouv-sujet").val();
     const message = $("#nouv-message").val();
-    const expediteur = $(".adresse").text();
+    const expediteur = $(".adresse").text().replace(/\s/g, "");
 
     // Verifie que les champs necessaires sont remplis
     if (destinataire && sujet && message) {
