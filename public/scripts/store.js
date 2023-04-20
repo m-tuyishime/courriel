@@ -56,12 +56,6 @@ $(() => {
         const contact = JSON.parse(event.originalEvent.newValue);
         ajouterContactCarnet(contact);
         break;
-
-      case "messagesRecus":
-        $(".aucun-message").addClass("hidden");
-        const courriel = JSON.parse(event.originalEvent.newValue);
-        ajouterCourrielRecu(courriel);
-        break;
     }
   });
 })

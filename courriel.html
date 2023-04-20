@@ -14,7 +14,7 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <!-- Ajoute un fichier JavaScript pour gérer les fichiers -->
-  <script type="text/javascript" src="./scripts/fichiers.js"></script>
+  <script type="text/javascript" src="./public/scripts/fichiers.js"></script>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
     <header>
       <!-- Logo et titre du site -->
       <div class="container-logo">
-        <img src="./images/courriel-logo.png" alt="logo du site web" />
+        <img src="./public/images/courriel-logo.png" alt="logo du site web" />
         <h1>Courriel</h1>
       </div>
       <!-- Clé d'adresse de l'utilisateur -->
@@ -46,7 +46,7 @@
       <div class="premiere-range">
         <!-- Barre de recherche -->
         <div class="recherche-messages">
-          <img src="./images/loupe.svg" alt="logo de recherche" />
+          <img src="./public/images/loupe.svg" alt="logo de recherche" />
           <input type="search" placeholder="Chercher un courriel" />
         </div>
         <!-- Liste des courriels -->
@@ -63,7 +63,7 @@
             </div>
             <!-- Partie du courriel qui supprime le courriel -->
             <div class="delete-courriel">
-              <img src="./images/message-poubelle.svg" alt="logo de poubelle" />
+              <img src="./public/images/message-poubelle.svg" alt="logo de poubelle" />
             </div>
           </li>
         </ul>
@@ -78,9 +78,10 @@
           <div class="nouv-info">
             <!-- Contient le champ pour sélectionner un destinataire -->
             <div class="container-nouv-destinataire">
-              <img src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
+              <img src="./public/images/utilisateur.svg" alt="logo d'un utilisateur" />
               <input id="nouv-destinataire" name="" type="text" placeholder="Sélectionner un destinataire" />
-              <img id="nouv-destinataire-drop" class="rotate-back" src="./images/expandre_bas.svg" alt="dropdown-arrow">
+              <img id="nouv-destinataire-drop" class="rotate-back" src="./public/images/expandre_bas.svg"
+                alt="dropdown-arrow">
             </div>
             <!-- Contient la liste des destinataires sélectionnés -->
             <div class="container-destinataires hidden scroll">
@@ -102,7 +103,7 @@
           <div class="nouv-footer">
             <!-- Bouton pour envoyer le message -->
             <button class="clickable nouv-btn-envoyer disabled">
-              <img src="./images/envoyer.svg" alt="logo d'envoi" />
+              <img src="./public/images/envoyer.svg" alt="logo d'envoi" />
               <p>Envoyer</p>
             </button>
           </div>
@@ -113,22 +114,22 @@
         <div class="container-contacts">
           <!-- Champ de recherche pour trouver un contact -->
           <div class="recherche-contacts">
-            <img src="./images/loupe.svg" alt="logo de recherche">
+            <img src="./public/images/loupe.svg" alt="logo de recherche">
             <input type="search" placeholder="Chercher un contact" />
           </div>
           <!-- Liste des contacts -->
           <ul class="list-contacts scroll">
             <!-- Un contact modèle de la liste caché -->
             <li class="clickable contacts-contact hidden" id="contacts-contact">
-              <img class="logo-utilisateur" src="./images/utilisateur.svg" alt="logo d'un utilisateur" />
+              <img class="logo-utilisateur" src="./public/images/utilisateur.svg" alt="logo d'un utilisateur" />
               <p class="contacts-user"></p>
-              <img class="logo-modification" src="./images/edit.svg" alt="logo de modification" />
-              <img class="logo-poubelle" src="./images/poubelle_blanche.svg" alt="logo de poubelle" />
+              <img class="logo-modification" src="./public/images/edit.svg" alt="logo de modification" />
+              <img class="logo-poubelle" src="./public/images/poubelle_blanche.svg" alt="logo de poubelle" />
             </li>
           </ul>
           <!-- Bouton pour ajouter un nouveau contact -->
           <button class="clickable btn-ajouter-contact">
-            <img src="./images/nouv_utilisater.svg" alt="logo d'ajouter un utilisateur" />
+            <img src="./public/images/nouv_utilisater.svg" alt="logo d'ajouter un utilisateur" />
             <p>Ajouter un contact</p>
           </button>
         </div>
@@ -150,17 +151,17 @@
         <h1>Ajouter un contact</h1>
         <!-- Boutton de fermeture de la popup-->
         <div class="pop-fermer">
-          <img src="./images/fermer.svg" alt="logo de fermeture">
+          <img src="./public/images/fermer.svg" alt="logo de fermeture">
         </div>
       </div>
       <!-- Espace de saisie pour le nom du contact -->
       <div class="pop-nom pop-contact-nom">
-        <img src="./images/utilisateur-ajouter.svg" alt="logo d'utilisateur">
+        <img src="./public/images/utilisateur-ajouter.svg" alt="logo d'utilisateur">
         <input type="text" placeholder="Nom">
       </div>
       <!-- Espace de saisie pour la clé d'adresse du contact -->
       <div class="pop-contact-cle">
-        <img src="./images/cle-noire.svg" alt="logo d'une cle">
+        <img src="./public/images/cle-noire.svg" alt="logo d'une cle">
         <textarea placeholder="Clé"></textarea>
       </div>
       <!-- Button d'enregistrement du contact -->
@@ -168,7 +169,7 @@
         <div>
           <p>Enregistrer</p>
         </div>
-        <img src="./images/sauvegarde.svg" alt="logo de sauvegarde">
+        <img src="./public/images/sauvegarde.svg" alt="logo de sauvegarde">
       </button>
     </div>
     <!-- Popup d'ajout de contact -->
@@ -181,11 +182,11 @@
         <h1></h1>
         <!-- Button de suppression du contact -->
         <div class="pop-poubelle">
-          <img src="./images/poubelle_noire.svg" alt="logo d'effacement">
+          <img src="./public/images/poubelle_noire.svg" alt="logo d'effacement">
         </div>
         <!-- Boutton de fermeture de la popup-->
         <div class="pop-fermer">
-          <img src="./images/fermer.svg" alt="logo de fermeture">
+          <img src="./public/images/fermer.svg" alt="logo de fermeture">
         </div>
       </div>
       <!-- Espace d'affichage du nom de l'expéditeur -->

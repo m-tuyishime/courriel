@@ -1,5 +1,5 @@
 // Tableau d'URL de fichiers de style
-const stylesChemin = "./styles/";
+const stylesChemin = "./public/styles/";
 const styleUrls = [
   "index.css",
   "reutilisables.css",
@@ -21,7 +21,7 @@ styleUrls.forEach(url => {
 });
 
 // Tableau d'URL de fichiers de script
-const scriptsChemin = "./scripts/";
+const scriptsChemin = "./public/scripts/";
 const scriptUrls = [
   "store.js",
   "reutilisables.js",
