@@ -1,4 +1,4 @@
-// Test the hashing functions in server\hashing.test.js:
+// Testez les fonctions de hachage dans serveur\hashing.test.js :
 const { encodeRSAOAEP, decodeRSAOAEP, generateKeyPairRSA } = require('../hashing');
 
 test('RSAES-OAEP', () => {
