@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  # la base de données
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: motdepasse
+      POSTGRES_DB: courriel
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    restart: always
+
+  # pour administrer la base de données
+  pgadmin:
+    image: dpage/pgadmin4:5.7
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@email.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_LISTEN_PORT: 5050
+    ports:
+      - "5050:5050"
+    restart: always
+
+volumes:
+  # pour stocker les données de la base de données
+  data:
